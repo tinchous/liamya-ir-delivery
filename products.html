@@ -1,99 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Productos | Autoservice Liam Yahir</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo - Autoservice Liam Yahir</title>
 
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
-  <link rel="stylesheet" href="css/neon-effects.css" />
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    body {
-      background-color: #111;
-      color: #eee;
-      font-family: 'Poppins', sans-serif;
-    }
-    .productos-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-    }
-    .producto-card {
-      background: #1b1b1b;
-      border: 1px solid #333;
-      border-radius: 10px;
-      text-align: center;
-      padding: 1rem;
-      transition: all 0.3s ease;
-    }
-    .producto-card:hover {
-      transform: translateY(-5px);
-      border-color: #00ffcc;
-      box-shadow: 0 0 10px #00ffcc40;
-    }
-    .producto-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: contain;
-      border-radius: 5px;
-    }
-    .producto-card h3 {
-      margin: 0.5rem 0;
-      font-size: 1.1rem;
-      color: #00ffcc;
-    }
-    .producto-card .precio {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #fff;
-    }
-    .producto-card .etiquetas span {
-      display: inline-block;
-      margin: 0.2rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      color: #000;
-    }
-    .etiqueta-oferta { background: #ffeb3b; }
-    .etiqueta-nuevo { background: #4caf50; color: #fff; }
-    .etiqueta-mas-vendido { background: #ff5722; color: #fff; }
-
-    .search-container {
-      text-align: center;
-      margin-top: 1.5rem;
-    }
-    .search-container input {
-      width: 80%;
-      max-width: 400px;
-      padding: 0.8rem 1rem;
-      border-radius: 5px;
-      border: 1px solid #00ffcc;
-      background-color: #222;
-      color: #fff;
-    }
-  </style>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/neon-effects.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+  <!-- Header -->
+  <header class="main-header glass-effect">
+    <div class="container header-container">
+      <div class="logo">
+        <img src="images/logo.png" alt="Autoservice Liam Yahir" class="logo-img">
+        <div class="logo-text">
+          <h1 class="logo-title">Autoservice</h1>
+          <p class="logo-subtitle"><span class="liam">Liam</span> <span class="ya">Yahir</span></p>
+        </div>
+      </div>
 
-  <div id="header"></div>
+      <nav class="main-nav">
+        <ul class="nav-list">
+          <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+          <li><a href="products.html" class="active"><i class="fas fa-store"></i> Catálogo</a></li>
+          <li><a href="categories.html"><i class="fas fa-tags"></i> Categorías</a></li>
+          <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
+          <li><a href="about.html"><i class="fas fa-users"></i> Nosotros</a></li>
+          <li><a href="contact.html"><i class="fas fa-phone"></i> Contacto</a></li>
+        </ul>
+      </nav>
 
-  <main>
-    <h1 style="text-align:center; margin-top:1rem;">Nuestros Productos</h1>
-    <div class="search-container">
-      <input id="buscador" type="text" placeholder="Buscar producto..." />
+      <div class="user-actions">
+        <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Ingresar</a>
+        <button class="cart-btn" id="cart-toggle">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count">0</span>
+        </button>
+      </div>
+
+      <button class="menu-toggle" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
-    <div class="productos-container" id="productos-container">
-      <p style="grid-column: 1/-1; text-align:center;">Cargando productos...</p>
+  </header>
+
+  <main class="products-page">
+    <div class="container">
+      <div class="products-header">
+        <h1 class="products-title">Nuestro Catálogo</h1>
+        <p class="products-subtitle">Explora todos nuestros productos disponibles y hacé tu pedido al instante.</p>
+      </div>
+
+      <div class="filters-container">
+        <div class="filter-grid">
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-search"></i> Buscar producto</label>
+            <input type="text" id="search-input" class="filter-input" placeholder="Escribe para buscar...">
+          </div>
+        </div>
+      </div>
+
+      <div id="productos-container" class="products-grid">
+        <p class="loading-products">Cargando productos...</p>
+      </div>
     </div>
   </main>
 
-  <div id="footer"></div>
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Autoservice Liam Yahir - Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
-  <script src="js/components.js"></script>
-  <script src="js/products.js"></script>
+  <!-- Carrito flotante -->
+  <div class="cart-floating" id="cart-floating">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-floating-count" id="cart-floating-count">0</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/cart-system.js"></script>
+
+  <script>
+    async function cargarProductos() {
+      const contenedor = document.getElementById('productos-container');
+      const buscador = document.getElementById('search-input');
+
+      try {
+        const endpoint = 'https://deliveryliamyahir.netlify.app/.netlify/functions/get-products';
+        const res = await fetch(endpoint);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const productos = await res.json();
+        renderProductos(productos);
+
+        buscador.addEventListener('input', (e) => {
+          const texto = e.target.value.toLowerCase();
+          const filtrados = productos.filter(p =>
+            p.nombre.toLowerCase().includes(texto) ||
+            (p.marca || '').toLowerCase().includes(texto)
+          );
+          renderProductos(filtrados);
+        });
+
+      } catch (error) {
+        console.error('❌ Error cargando productos:', error);
+        contenedor.innerHTML = `<p style="color:red;">Error al cargar productos.</p>`;
+      }
+    }
+
+    function renderProductos(lista) {
+      const contenedor = document.getElementById('productos-container');
+      contenedor.innerHTML = '';
+
+      if (!lista.length) {
+        contenedor.innerHTML = `<p>No se encontraron productos.</p>`;
+        return;
+      }
+
+      lista.forEach(p => {
+        const card = document.createElement('div');
+        card.classList.add('producto-card');
+        card.innerHTML = `
+          <img src="${p.imagen}" alt="${p.nombre}" class="producto-imagen">
+          <h3>${p.nombre}</h3>
+          <p class="producto-marca">${p.marca || ''}</p>
+          <p class="producto-precio">$${p.precio?.toFixed(2) || '0.00'}</p>
+          <div class="cantidad">
+            <button class="menos" data-id="${p.id}">-</button>
+            <span id="cantidad-${p.id}">1</span>
+            <button class="mas" data-id="${p.id}">+</button>
+          </div>
+          <button class="agregar-carrito" data-id="${p.id}">Agregar al carrito</button>
+        `;
+        contenedor.appendChild(card);
+      });
+
+      inicializarEventosCarrito(lista);
+    }
+
+    function inicializarEventosCarrito(lista) {
+      document.querySelectorAll('.mas').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const el = document.getElementById(`cantidad-${id}`);
+          el.textContent = Number(el.textContent) + 1;
+        });
+      });
+
+      document.querySelectorAll('.menos').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const el = document.getElementById(`cantidad-${id}`);
+          el.textContent = Math.max(1, Number(el.textContent) - 1);
+        });
+      });
+
+      document.querySelectorAll('.agregar-carrito').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const producto = lista.find(p => p.id == id);
+          const cantidad = Number(document.getElementById(`cantidad-${id}`).textContent);
+          addToCart({ ...producto, quantity: cantidad });
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarProductos);
+  </script>
 </body>
 </html>
