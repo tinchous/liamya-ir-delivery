@@ -3,878 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoservice Liam Yahir - 24/7</title>
+    <title>Autoservice Liam Yahir - Inicio</title>
 
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/neon-effects.css">
     <link rel="stylesheet" href="css/responsive.css">
-
-    <style>
-        /* Hero Section with Parallax */
-        .hero-section {
-            height: 85vh;
-            background: linear-gradient(rgba(10, 10, 20, 0.85), rgba(10, 10, 20, 0.9)),
-                        url('images/hero-bg.jpg') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite alternate;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: #ccc;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Featured Categories */
-        .featured-categories {
-            padding: 4rem 2rem;
-            background: #0a0a14;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .category-card {
-            background: linear-gradient(145deg, rgba(30, 30, 40, 0.9), rgba(20, 20, 30, 0.9));
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: 0.6s;
-        }
-
-        .category-card:hover::before {
-            left: 100%;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
-        }
-
-        .category-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        /* Services */
-        .services-section {
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #0a0a14 0%, #151525 100%);
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 0, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
-        /* Stats */
-        .stats-section {
-            padding: 3rem 2rem;
-            background: #0a0a0a;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Hero buttons */
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .float-item {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.3;
-            z-index: 1;
-        }
-
-        /* New styles for the functions */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #00ffff;
-        }
-
-        .error-message {
-            background: rgba(255, 50, 50, 0.1);
-            border: 1px solid #ff3333;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            color: #ff9999;
-            text-align: center;
-        }
-
-        .category-filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .category-filter-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccc;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .category-filter-btn:hover,
-        .category-filter-btn.active {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: #00ffff;
-            color: #00ffff;
-        }
-    </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header class="main-header glass-effect">
-        <div class="container header-container">
-            <!-- Logo -->
-            <div class="logo">
-                <img src="images/logo.png" alt="Autoservice Liam Yahir" class="logo-img">
-                <div class="logo-text">
-                    <h1 class="logo-title">Autoservice</h1>
-                    <p class="logo-subtitle"><span class="liam">Liam</span><span class="ya">Yahir</span></p>
-                </div>
+
+<!-- HEADER -->
+<header class="main-header glass-effect">
+    <div class="container header-container">
+        <div class="logo">
+            <img src="images/logo.png" class="logo-img">
+            <div class="logo-text">
+                <h1 class="logo-title">Autoservice</h1>
+                <p class="logo-subtitle"><span class="liam">Liam</span> <span class="ya">Yahir</span></p>
             </div>
+        </div>
 
-            <!-- Navigation -->
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li class="nav-item"><a href="products.html" class="nav-link"><i class="fas fa-store"></i> Catálogo</a></li>
-                    <li class="nav-item"><a href="categories.html" class="nav-link"><i class="fas fa-tags"></i> Categorías</a></li>
-                    <li class="nav-item"><a href="delivery.html" class="nav-link"><i class="fas fa-truck"></i> Delivery</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-users"></i> Nosotros</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-phone"></i> Contacto</a></li>
-                </ul>
-            </nav>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="products.html" class="nav-link"><i class="fas fa-store"></i> Catálogo</a></li>
+                <li><a href="delivery.html" class="nav-link"><i class="fas fa-truck"></i> Delivery</a></li>
+                <li><a href="about.html" class="nav-link"><i class="fas fa-users"></i> Nosotros</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-phone"></i> Contacto</a></li>
+            </ul>
+        </nav>
 
-            <!-- User Actions -->
-            <div class="user-actions">
-                <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Ingresar</a>
-                <button class="cart-btn" id="cart-toggle">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <button class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-bars"></i>
+        <div class="user-actions">
+            <button class="cart-btn" id="cart-toggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </button>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Todo lo que necesitas, <span class="highlight">24/7</span></h1>
-            <p class="hero-subtitle">El autoservice más completo de Montevideo. Productos frescos, bebidas, tabaco y más. Delivery rápido y atención personalizada.</p>
-            <div class="hero-buttons">
-                <a href="products.html" class="btn-primary floating">
-                    <i class="fas fa-shopping-basket"></i> Comprar Ahora
-                </a>
-                <a href="delivery.html" class="btn-secondary">
-                    <i class="fas fa-motorcycle"></i> Ver Delivery
-                </a>
-            </div>
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container hero-container">
+        <h1 class="hero-title neon-text">Bienvenido al Autoservice más rápido de Montevideo</h1>
+        <p class="hero-subtitle">Precios bajos, entregas express y atención 24/7</p>
+        <a href="products.html" class="btn-primary hero-btn">
+            <i class="fas fa-shopping-basket"></i> Ver Catálogo
+        </a>
+    </div>
+</section>
+
+<!-- FEATURED CATEGORIES (FIJAS) -->
+<section class="categories-highlight">
+    <h2 class="section-title neon-text-center">Categorías Destacadas</h2>
+
+    <div class="categories-grid">
+
+        <div class="category-card" onclick="window.location.href='products.html?category=ROTISERIA'">
+            <div class="category-icon"><i class="fas fa-utensils"></i></div>
+            <h3 class="category-title">Rotisería</h3>
         </div>
 
-        <!-- Floating Elements -->
-        <div class="floating-elements">
-            <div class="float-item" style="top:20%; left:10%; animation-delay:0s;">
-                <i class="fas fa-beer"></i>
-            </div>
-            <div class="float-item" style="top:60%; left:15%; animation-delay:1s;">
-                <i class="fas fa-wine-bottle"></i>
-            </div>
-            <div class="float-item" style="top:30%; right:15%; animation-delay:2s;">
-                <i class="fas fa-cookie-bite"></i>
-            </div>
-            <div class="float-item" style="top:70%; right:10%; animation-delay:3s;">
-                <i class="fas fa-smoking"></i>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Categories -->
-    <section class="featured-categories">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Categorías <span class="neon-text">Destacadas</span></h2>
-                <p class="section-subtitle">Explora nuestros productos por categoría</p>
-
-                <!-- Category Filter Buttons -->
-                <div class="category-filters" id="category-filters">
-                    <!-- Los filtros se cargarán dinámicamente -->
-                </div>
-            </div>
-
-            <div class="categories-grid" id="categories-grid">
-                <!-- Categories will be loaded dynamically -->
-                <div class="loading" id="categories-loading">
-                    <i class="fas fa-spinner fa-spin"></i> Cargando categorías...
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Nuestros <span class="neon-text">Servicios</span></h2>
-                <p class="section-subtitle">Lo que nos hace diferentes</p>
-            </div>
-
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-clock" style="color:#00ffff;"></i>
-                    </div>
-                    <h3 class="service-title">Abierto 24/7</h3>
-                    <p class="service-desc">Atendemos todos los días, a cualquier hora. Excepto martes de 00:00 a 08:00.</p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-truck-fast" style="color:#ff00ff;"></i>
-                    </div>
-                    <h3 class="service-title">Delivery Rápido</h3>
-                    <p class="service-desc">Delivery <span class="liam">Liam</span><span class="ya">YA</span>: Entregamos en Montevideo de 08:00 a 23:30. Gratis en compras mayores a $1500.</p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-boxes" style="color:#00ff00;"></i>
-                    </div>
-                    <h3 class="service-title">Productos Frescos</h3>
-                    <p class="service-desc">Stock permanente y productos de primera calidad garantizada.</p>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-comments-dollar" style="color:#ffff00;"></i>
-                    </div>
-                    <h3 class="service-title">Precios Competitivos</h3>
-                    <p class="service-desc">Los mejores precios del mercado con promociones especiales.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3 class="stat-number" data-count="+2000">0</h3>
-                    <p class="stat-label">Productos</p>
-                </div>
-                <div class="stat-item">
-                    <h3 class="stat-number" data-count="24">0</h3>
-                    <p class="stat-label">Horas al día</p>
-                </div>
-                <div class="stat-item">
-                    <h3 class="stat-number" data-count="7">0</h3>
-                    <p class="stat-label">Días a la semana</p>
-                </div>
-                <div class="stat-item">
-                    <h3 class="stat-number" data-count="1500">0</h3>
-                    <p class="stat-label">Clientes satisfechos</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="Logo" class="footer-logo-img">
-                        <div>
-                            <h3 class="footer-title">Autoservice<br><span class="liam">Liam</span> <span class="ya">Yahir</span></h3>
-                            <p class="delivery-brand">
-                                Delivery <span class="liam">Liam</span><span class="ya">YA</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="footer-desc">Tu autoservice de confianza en Montevideo. Atención personalizada y productos de calidad.</p>
-                    <div class="social-links">
-                        <a href="https://wa.me/59892308828" target="_blank" class="social-link" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Horarios</h4>
-                    <ul class="footer-list">
-                        <li><i class="fas fa-clock"></i> Lunes a Domingo: 24/7</li>
-                        <li><i class="fas fa-exclamation-circle"></i> Excepto Martes: 00:00 - 08:00</li>
-                        <li><i class="fas fa-truck"></i> Delivery: 08:00 - 23:30</li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Contacto</h4>
-                    <ul class="footer-list">
-                        <li><i class="fas fa-map-marker-alt"></i> Alejandro Fiol de Pereda 1251, Montevideo</li>
-                        <li><i class="fas fa-phone"></i> +598 92 308 828</li>
-                        <li><i class="fas fa-envelope"></i> info@liamyahir.com</li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Enlaces Rápidos</h4>
-                    <ul class="footer-list">
-                        <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                        <li><a href="products.html"><i class="fas fa-store"></i> Catálogo</a></li>
-                        <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
-                        <li><a href="about.html"><i class="fas fa-users"></i> Nosotros</a></li>
-                        <li><a href="contact.html"><i class="fas fa-phone"></i> Contacto</a></li>
-                        <li><a href="trabaja-con-nosotros.html"><i class="fas fa-briefcase"></i> Trabaja con Nosotros</a></li>
-                        <li><a href="login.html"><i class="fas fa-user"></i> Mi Cuenta</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Autoservice Liam Yahir. Todos los derechos reservados.</p>
-                <div class="footer-links">
-                    <a href="terminos.html">Términos y Condiciones</a>
-                    <a href="privacidad.html">Política de Privacidad</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
-            <button class="cart-close" id="cart-close">&times;</button>
+        <div class="category-card" onclick="window.location.href='products.html?category=FRUTAS/VERDURAS'">
+            <div class="category-icon"><i class="fas fa-apple-alt"></i></div>
+            <h3 class="category-title">Frutas & Verduras</h3>
         </div>
 
-        <div class="cart-items" id="cart-items">
-            <!-- Cart items will be loaded here -->
+        <div class="category-card" onclick="window.location.href='products.html?category=BEBIDAS ALCOHOLICAS'">
+            <div class="category-icon"><i class="fas fa-wine-bottle"></i></div>
+            <h3 class="category-title">Bebidas Alcohólicas</h3>
         </div>
 
-        <div class="cart-summary">
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="cart-subtotal">$0</span>
-            </div>
-            <div class="summary-row">
-                <span>Delivery</span>
-                <span id="cart-delivery">$0</span>
-            </div>
-            <div class="summary-row total">
-                <span>Total</span>
-                <span id="cart-total">$0</span>
-            </div>
-
-            <div class="delivery-info" id="delivery-message">
-                Agrega $1500 más para envío gratis
-            </div>
-
-            <div class="cart-actions">
-                <a href="checkout.html" class="btn-checkout">Finalizar Compra</a>
-                <a href="products.html" class="btn-continue">Seguir Comprando</a>
-                <button class="btn-clear" id="clear-cart">Vaciar Carrito</button>
-            </div>
+        <div class="category-card" onclick="window.location.href='products.html?category=BEBIDAS SIN ALCOHOL'">
+            <div class="category-icon"><i class="fas fa-bottle-water"></i></div>
+            <h3 class="category-title">Bebidas SIN Alcohol</h3>
         </div>
+
+    </div>
+</section>
+
+<!-- TESTIMONIOS / METRICAS -->
+<section class="stats-section">
+    <div class="container stats-container">
+
+        <div class="stat-box">
+            <h3 class="stat-number" id="clientes-satisfechos">1500</h3>
+            <p class="stat-label">Clientes Satisfechos</p>
+        </div>
+
+        <div class="stat-box">
+            <h3 class="stat-number">24/7</h3>
+            <p class="stat-label">Atención Todos los Días</p>
+        </div>
+
+        <div class="stat-box">
+            <h3 class="stat-number">+200</h3>
+            <p class="stat-label">Productos Disponibles</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+    <div class="container footer-grid">
+
+        <div class="footer-col">
+            <div class="footer-logo">
+                <img src="images/logo.png" class="footer-logo-img">
+                <h3 class="footer-title">Autoservice <br><span class="liam">Liam</span> <span class="ya">Yahir</span></h3>
+            </div>
+            <p>Tu autoservice 24/7 de confianza.</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Horarios</h4>
+            <p>Atendemos 24/7</p>
+            <p>Delivery: 08:00 a 23:30</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contacto</h4>
+            <p><i class="fas fa-map-marker-alt"></i> Montevideo</p>
+            <p><i class="fas fa-phone"></i> +598 92 308 828</p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Enlaces</h4>
+            <p><a href="privacidad.html">Política de Privacidad</a></p>
+            <p><a href="terminos.html">Términos & Condiciones</a></p>
+        </div>
+
+    </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+        <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
+        <button class="cart-close" id="cart-close">&times;</button>
     </div>
 
-    <div class="cart-overlay" id="cart-overlay"></div>
+    <div id="cart-items" class="cart-items"></div>
 
-    <!-- Cart Floating Button -->
-    <div class="cart-floating" id="cart-floating">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-floating-count" id="cart-floating-count">0</span>
+    <div class="cart-summary">
+        <div class="summary-row"><span>Subtotal</span><span id="cart-subtotal">$0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="cart-delivery">$0</span></div>
+        <div class="summary-row total"><span>Total</span><span id="cart-total">$0</span></div>
+        <a href="checkout.html" class="btn-checkout">Finalizar Compra</a>
     </div>
+</div>
 
-    <!-- Audio Player -->
-    <div class="audio-player" id="audio-player">
-        <audio id="bg-music" loop>
-            <source src="media/jingle.mp3" type="audio/mpeg">
-            Tu navegador no soporta el elemento de audio.
-        </audio>
-        <div class="audio-controls">
-            <button class="audio-btn" id="play-btn" title="Reproducir/Pausar">
-                <i class="fas fa-play"></i>
-            </button>
-            <div class="volume-control">
-                <button class="audio-btn" id="mute-btn" title="Silenciar">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" title="Volumen">
-            </div>
-        </div>
-    </div>
+<div class="cart-floating" id="cart-floating">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-floating-count">0</span>
+</div>
 
-    <!-- Scripts -->
-    <script src="js/app.js"></script>
-    <script src="js/cart-system.js"></script>
-    <script src="js/audio-player.js"></script>
+<!-- AUDIO PLAYER -->
+<div class="audio-player" id="audio-player">
+    <audio id="bg-music" loop>
+        <source src="media/jingle.mp3" type="audio/mpeg">
+    </audio>
 
-    <script>
-        // ============================================
-        // FUNCIÓN: initializeApp
-        // ============================================
-        function initializeApp() {
-            console.log('🚀 Inicializando Autoservice Liam Yahir...');
+    <button id="play-btn" class="audio-btn"><i class="fas fa-play"></i></button>
+    <button id="mute-btn" class="audio-btn"><i class="fas fa-volume-up"></i></button>
+    <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="0.5">
+</div>
 
-            // 1. Inicializar el contador de estadísticas
-            initializeStatsCounter();
+<script src="js/app.js"></script>
+<script src="js/cart-system.js"></script>
+<script src="js/audio-player.js"></script>
 
-            // 2. Cargar categorías destacadas
-            loadCategoriesForHome();
+<script>
+// Aumentar contador de clientes satisfechos en cada visita
+let count = localStorage.getItem("clientes") || 1500;
+count++;
+localStorage.setItem("clientes", count);
 
-            // 3. Configurar filtros de categorías
-            setupCategoryFilters();
+document.getElementById("clientes-satisfechos").textContent = count;
+</script>
 
-            // 4. Inicializar elementos interactivos
-            initializeInteractiveElements();
-
-            // 5. Cargar el carrito desde localStorage
-            loadCartFromStorage();
-
-            console.log('✅ Aplicación inicializada correctamente');
-        }
-
-        // ============================================
-        // FUNCIÓN: filterByCategory
-        // ============================================
-        function filterByCategory(category) {
-            console.log(`🔍 Filtrando por categoría: ${category}`);
-
-            const categoriesGrid = document.getElementById('categories-grid');
-            const loadingElement = document.getElementById('categories-loading');
-
-            if (!categoriesGrid) return;
-
-            // Mostrar estado de carga
-            categoriesGrid.innerHTML = `
-                <div class="loading" id="categories-loading">
-                    <i class="fas fa-spinner fa-spin"></i> Cargando categoría: ${category}...
-                </div>
-            `;
-
-            // Actualizar botones de filtro activos
-            const filterButtons = document.querySelectorAll('.category-filter-btn');
-            filterButtons.forEach(btn => {
-                if (btn.dataset.category === category) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-
-            // Cargar productos de la categoría seleccionada
-            setTimeout(() => {
-                loadCategoryProducts(category);
-            }, 300); // Pequeño delay para mejor experiencia de usuario
-        }
-
-        // ============================================
-        // FUNCIÓN: loadCategoryProducts
-        // ============================================
-        async function loadCategoryProducts(category) {
-            try {
-                const response = await fetch('data/productos.json');
-                const data = await response.json();
-                const products = data.productos || [];
-
-                // Filtrar productos por categoría
-                const filteredProducts = products.filter(product =>
-                    product.categoria && product.categoria.toLowerCase() === category.toLowerCase()
-                );
-
-                const categoriesGrid = document.getElementById('categories-grid');
-
-                if (filteredProducts.length === 0) {
-                    categoriesGrid.innerHTML = `
-                        <div class="error-message" style="grid-column: 1 / -1;">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <p>No se encontraron productos en la categoría "${category}"</p>
-                            <button class="btn-small" onclick="loadAllCategories()">Ver todas las categorías</button>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Mostrar productos de la categoría (máximo 8)
-                const productsToShow = filteredProducts.slice(0, 8);
-                const productsHTML = productsToShow.map(product => {
-                    return `
-                        <div class="category-card" onclick="window.location.href='products.html?id=${product.id}'">
-                            <div class="category-icon">
-                                ${getCategoryIcon(product.categoria)}
-                            </div>
-                            <h3 class="category-title">${product.nombre}</h3>
-                            <p class="category-desc">${product.categoria}</p>
-                            <p class="category-price">$${product.precio}</p>
-                            <button class="btn-small">Ver producto</button>
-                        </div>
-                    `;
-                }).join('');
-
-                // Agregar botón para ver más productos de esta categoría
-                const seeMoreHTML = `
-                    <div class="category-card" onclick="window.location.href='products.html?category=${encodeURIComponent(category)}'">
-                        <div class="category-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h3 class="category-title">Ver todos</h3>
-                        <p class="category-desc">${filteredProducts.length} productos en ${category}</p>
-                        <button class="btn-small">Ver categoría completa</button>
-                    </div>
-                `;
-
-                categoriesGrid.innerHTML = productsHTML + seeMoreHTML;
-
-            } catch (error) {
-                console.error('Error cargando productos:', error);
-                const categoriesGrid = document.getElementById('categories-grid');
-                categoriesGrid.innerHTML = `
-                    <div class="error-message" style="grid-column: 1 / -1;">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <p>Error al cargar los productos: ${error.message}</p>
-                        <button class="btn-small" onclick="loadAllCategories()">Volver a intentar</button>
-                    </div>
-                `;
-            }
-        }
-
-        // ============================================
-        // FUNCIÓN: loadAllCategories
-        // ============================================
-        function loadAllCategories() {
-            // Resetear filtros activos
-            const filterButtons = document.querySelectorAll('.category-filter-btn');
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            // Recargar todas las categorías
-            loadCategoriesForHome();
-        }
-
-        // ============================================
-        // FUNCIÓN: setupCategoryFilters
-        // ============================================
-        async function setupCategoryFilters() {
-            try {
-                const response = await fetch('data/productos.json');
-                const data = await response.json();
-                const products = data.productos || [];
-
-                // Obtener categorías únicas
-                const categories = [...new Set(products.map(p => p.categoria).filter(Boolean))];
-
-                const filtersContainer = document.getElementById('category-filters');
-                if (!filtersContainer) return;
-
-                // Crear botón para "Todas"
-                filtersContainer.innerHTML = `
-                    <button class="category-filter-btn active" data-category="all" onclick="loadAllCategories()">
-                        <i class="fas fa-layer-group"></i> Todas
-                    </button>
-                `;
-
-                // Agregar botones para cada categoría (máximo 6)
-                categories.slice(0, 6).forEach(category => {
-                    const button = document.createElement('button');
-                    button.className = 'category-filter-btn';
-                    button.dataset.category = category;
-                    button.innerHTML = `<i class="fas fa-tag"></i> ${category}`;
-                    button.onclick = () => filterByCategory(category);
-                    filtersContainer.appendChild(button);
-                });
-
-            } catch (error) {
-                console.error('Error configurando filtros:', error);
-            }
-        }
-
-        // ============================================
-        // FUNCIÓN: initializeStatsCounter
-        // ============================================
-        function initializeStatsCounter() {
-            const counters = document.querySelectorAll('.stat-number');
-            const speed = 200;
-
-            counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = parseInt(counter.getAttribute('data-count'));
-                    const count = parseInt(counter.innerText.replace('+', '')) || 0;
-                    const increment = Math.ceil(target / speed);
-
-                    if (count < target) {
-                        counter.innerText = (counter.getAttribute('data-count').startsWith('+') ? '+' : '') + (count + increment);
-                        setTimeout(updateCount, 1);
-                    } else {
-                        counter.innerText = counter.getAttribute('data-count');
-                    }
-                };
-
-                updateCount();
-            });
-        }
-
-        // ============================================
-        // FUNCIÓN: initializeInteractiveElements
-        // ============================================
-        function initializeInteractiveElements() {
-            // Inicializar botones flotantes
-            const floatingButtons = document.querySelectorAll('.floating');
-            floatingButtons.forEach(btn => {
-                btn.style.animationDelay = `${Math.random() * 2}s`;
-            });
-
-            // Inicializar elementos flotantes
-            const floatItems = document.querySelectorAll('.float-item');
-            floatItems.forEach(item => {
-                item.style.animation = `float ${3 + Math.random() * 4}s ease-in-out infinite`;
-                item.style.animationDelay = `${Math.random() * 5}s`;
-            });
-
-            // Inicializar efectos hover en tarjetas
-            const cards = document.querySelectorAll('.category-card, .service-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = this.classList.contains('category-card')
-                        ? 'translateY(-10px)'
-                        : 'translateY(-5px)';
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        }
-
-        // ============================================
-        // FUNCIÓN: loadCartFromStorage
-        // ============================================
-        function loadCartFromStorage() {
-            try {
-                const cart = JSON.parse(localStorage.getItem('liam-yahir-cart')) || [];
-                const cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-
-                // Actualizar contadores del carrito
-                document.querySelectorAll('.cart-count, .cart-floating-count').forEach(element => {
-                    element.textContent = cartCount;
-                });
-
-                console.log(`🛒 Carrito cargado: ${cartCount} items`);
-            } catch (error) {
-                console.error('Error cargando carrito:', error);
-            }
-        }
-
-        // ============================================
-        // FUNCIÓN: getCategoryIcon (ya existente)
-        // ============================================
-        function getCategoryIcon(category) {
-            const icons = {
-                'BEBIDAS ALCOHOLICAS': '<i class="fas fa-beer"></i>',
-                'BEBIDAS SIN ALCOHOL': '<i class="fas fa-wine-bottle"></i>',
-                'SNACKS/DULCES': '<i class="fas fa-cookie-bite"></i>',
-                'TABACO': '<i class="fas fa-smoking"></i>',
-                'ALMACEN': '<i class="fas fa-shopping-basket"></i>',
-                'FRUTAS/VERDURAS': '<i class="fas fa-apple-alt"></i>',
-                'LACTEOS': '<i class="fas fa-cheese"></i>',
-                'PANADERIA': '<i class="fas fa-bread-slice"></i>',
-                'CARNICERIA': '<i class="fas fa-drumstick-bite"></i>',
-                'LIMPIEZA': '<i class="fas fa-broom"></i>',
-                'BEBIDAS': '<i class="fas fa-glass-whiskey"></i>',
-                'COMIDA': '<i class="fas fa-utensils"></i>'
-            };
-
-            for (const [key, icon] of Object.entries(icons)) {
-                if (category && category.toUpperCase().includes(key)) return icon;
-            }
-
-            return '<i class="fas fa-box"></i>';
-        }
-
-        // ============================================
-        // EJECUCIÓN AL CARGAR LA PÁGINA
-        // ============================================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar la aplicación
-            initializeApp();
-
-            // Configurar listeners adicionales
-            setupEventListeners();
-
-            // Mostrar mensaje de bienvenida
-            console.log('🏪 Autoservice Liam Yahir - Página lista');
-        });
-
-        // ============================================
-        // FUNCIÓN: setupEventListeners
-        // ============================================
-        function setupEventListeners() {
-            // Listeners para el menú móvil
-            const menuToggle = document.getElementById('menu-toggle');
-            if (menuToggle) {
-                menuToggle.addEventListener('click', toggleMobileMenu);
-            }
-
-            // Listeners para el carrito
-            const cartToggle = document.getElementById('cart-toggle');
-            const cartClose = document.getElementById('cart-close');
-            const cartOverlay = document.getElementById('cart-overlay');
-
-            if (cartToggle) cartToggle.addEventListener('click', toggleCart);
-            if (cartClose) cartClose.addEventListener('click', toggleCart);
-            if (cartOverlay) cartOverlay.addEventListener('click', toggleCart);
-        }
-
-        // ============================================
-        // FUNCIONES AUXILIARES
-        // ============================================
-        function toggleMobileMenu() {
-            const nav = document.querySelector('.main-nav');
-            nav.classList.toggle('active');
-        }
-
-        function toggleCart() {
-            const cartSidebar = document.getElementById('cart-sidebar');
-            const cartOverlay = document.getElementById('cart-overlay');
-
-            if (cartSidebar && cartOverlay) {
-                cartSidebar.classList.toggle('active');
-                cartOverlay.classList.toggle('active');
-
-                // Bloquear scroll cuando el carrito está abierto
-                document.body.style.overflow = cartSidebar.classList.contains('active') ? 'hidden' : '';
-            }
-        }
-    </script>
 </body>
 </html>

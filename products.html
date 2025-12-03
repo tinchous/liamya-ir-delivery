@@ -1,563 +1,694 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - Autoservice Liam Yahir</title>
 
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/neon-effects.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/neon-effects.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <style>
-        /* Corrige selects blancos invisibles */
-        select.filter-select, input.filter-input {
-            color: #fff !important;
-            background: rgba(255,255,255,0.08) !important;
+        .products-page {
+            padding-top: 120px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0f0f1a 100%);
         }
 
-        option {
-            background: #111 !important;
-            color: #fff !important;
-        }
-
-        /* Filtros compactos */
-        .filters-container {
-            margin-top: 140px;
-            padding: 20px;
-            border-radius: 15px;
-            background: rgba(20,20,30,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Estilo del grid */
-        .products-grid {
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            padding: 20px 0;
-        }
-
-        .product-card {
-            background: rgba(20,20,30,0.85);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 16px;
-            padding: 15px;
+        .products-header {
             text-align: center;
-            transition: 0.25s;
+            margin-bottom: 3rem;
         }
 
-        .product-card:hover {
-            transform: translateY(-4px);
+        .products-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .products-subtitle {
+            color: #ccc;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .filters-container {
+            background: rgba(30, 30, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            margin-bottom: 0.5rem;
+            color: #00ffff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-select, .filter-input {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus, .filter-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2);
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .price-value {
+            color: #00ff00;
+            font-weight: 600;
+            min-width: 60px;
+        }
+
+        .products-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .products-count span {
+            color: #00ffff;
+            font-weight: 600;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn.active {
+            background: #00ffff;
+            color: #000;
             border-color: #00ffff;
         }
 
-        .product-image {
+        .no-products {
+            text-align: center;
+            padding: 4rem 2rem;
+            display: none;
+        }
+
+        .no-products i {
+            font-size: 4rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .no-products h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .products-grid {
+            margin-top: 2rem;
+        }
+
+        .producto-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            position: relative;
+            transition: transform .2s;
+        }
+
+        .producto-box:hover {
+            transform: scale(1.03);
+        }
+
+        .producto-box img {
             width: 100%;
-            height: 230px;
+            height: 160px;
             object-fit: contain;
-            border-radius: 10px;
-            margin-bottom: 10px;
         }
 
-        .price {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #fff;
+        .producto-precio {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: .5rem;
         }
 
-        .tag {
-            display: inline-block;
+        .badge-nuevo {
+            background: #00ff00;
+            color: #000;
             padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
             font-weight: bold;
-            margin-bottom: 6px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
-        .new { background: #00d9ff; color:#000; }
-        .offer { background: #ff00aa; color:#fff; }
-        .top { background: #00ff66; color:#000; }
 
-        .pagination {
-            display:flex;
-            justify-content:center;
-            margin:30px 0;
-            gap:10px;
+        .badge-oferta {
+            background: #ff0066;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
-        .page-btn {
-            background:#111;
-            color:#fff;
-            padding:8px 12px;
-            border-radius:8px;
-            border:1px solid #00ffff;
-            cursor:pointer;
-        }
-        .page-btn.active {
-            background:#00ffff;
-            color:#000;
+
+        .badge-destacado {
+            background: #ffcc00;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
     </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
-<header class="main-header glass-effect">
-    <div class="container header-container">
-
-        <!-- Logo -->
-        <div class="logo">
-            <img src="images/logo.png" alt="Autoservice Liam Yahir" class="logo-img">
-            <div class="logo-text">
-                <h1 class="logo-title">Autoservice</h1>
-                <p class="logo-subtitle"><span class="liam">Liam</span> <span class="ya">Yahir</span></p>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="main-nav">
-            <ul class="nav-list">
-                <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a class="active" href="products.html"><i class="fas fa-store"></i> Catálogo</a></li>
-                <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
-                <li><a href="about.html"><i class="fas fa-users"></i> Nosotros</a></li>
-                <li><a href="contact.html"><i class="fas fa-phone"></i> Contacto</a></li>
-            </ul>
-        </nav>
-
-        <!-- Cart Button -->
-        <button class="cart-btn" id="cart-toggle">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-        </button>
-    </div>
-</header>
-
-<main class="products-page">
-    <div class="container">
-
-        <!-- Products Header -->
-        <div class="products-header">
-            <h1 class="products-title" style="background:linear-gradient(90deg, #00ffff, #0044ff);-webkit-background-clip:text;color:transparent;">
-                Nuestro Catálogo
-            </h1>
-            <p class="products-subtitle">Explorá todos nuestros productos y filtrá por categoría o precio.</p>
-        </div>
-
-        <!-- Filters -->
-        <div class="filters-container">
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-search"></i> Buscar producto</label>
-                    <input type="text" id="search-input" class="filter-input" placeholder="Escribe para buscar...">
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-tags"></i> Categoría</label>
-                    <select id="category-filter" class="filter-select">
-                        <option value="">Todas las categorías</option>
-                        <!-- Dinámico JS -->
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-sort-amount-down"></i> Ordenar por</label>
-                    <select id="sort-filter" class="filter-select">
-                        <option value="">Predeterminado</option>
-                        <option value="price-asc">Menor precio</option>
-                        <option value="price-desc">Mayor precio</option>
-                        <option value="name-asc">A - Z</option>
-                        <option value="name-desc">Z - A</option>
-                        <option value="nuevo">Nuevos</option>
-                        <option value="oferta">Ofertas</option>
-                        <option value="top">Destacados</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label"><i class="fas fa-filter"></i> Rango de precio</label>
-                    <select id="price-filter" class="filter-select">
-                        <option value="">Todos</option>
-                        <option value="0-200">$0 - $200</option>
-                        <option value="201-500">$201 - $500</option>
-                        <option value="501-800">$501 - $800</option>
-                        <option value="801-2000">$801 - $2000</option>
-                    </select>
+    <!-- Header -->
+    <header class="main-header glass-effect">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="images/logo.png" class="logo-img" alt="">
+                <div class="logo-text">
+                    <h1 class="logo-title">Autoservice</h1>
+                    <p class="logo-subtitle"><span class="liam">Liam</span> <span class="ya">Yahir</span></p>
                 </div>
             </div>
-            <div style="display:flex; gap:10px; margin-top:20px;">
-                <button onclick="clearFilters()" class="btn-secondary" style="flex:1;">
+
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a class="active" href="products.html"><i class="fas fa-store"></i> Catálogo</a></li>
+                    <li><a href="categories.html"><i class="fas fa-tags"></i> Categorías</a></li>
+                    <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-actions">
+                <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Ingresar</a>
+                <button id="cart-toggle" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Products Page -->
+    <main class="products-page">
+        <div class="container">
+            <div class="products-header">
+                <h1 class="products-title">Nuestro Catálogo</h1>
+                <p class="products-subtitle">Explora todos nuestros productos disponibles.</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-container">
+                <div class="filter-grid">
+
+                    <!-- BUSCADOR -->
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-search"></i> Buscar</label>
+                        <input id="search-input" class="filter-input" type="text" placeholder="Buscar productos...">
+                    </div>
+
+                    <!-- CATEGORÍA -->
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-tags"></i> Categoría</label>
+                        <select id="category-filter" class="filter-select">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </div>
+
+                    <!-- ORDENAR -->
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-sort"></i> Ordenar por</label>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="">Predeterminado</option>
+                            <option value="name-asc">A - Z</option>
+                            <option value="name-desc">Z - A</option>
+                            <option value="price-asc">Menor precio</option>
+                            <option value="price-desc">Mayor precio</option>
+                            <option value="nuevo">Nuevos</option>
+                            <option value="oferta">Ofertas</option>
+                            <option value="destacado">Destacados</option>
+                        </select>
+                    </div>
+
+                    <!-- RANGO DE PRECIO -->
+                    <div class="filter-group">
+                        <label class="filter-label"><i class="fas fa-money-bill"></i> Rango de precio</label>
+                        <select id="price-filter" class="filter-select">
+                            <option value="">Todos</option>
+                            <option value="0-200">0 - 200</option>
+                            <option value="201-500">201 - 500</option>
+                            <option value="501-800">501 - 800</option>
+                            <option value="801-2000">801 - 2000</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button onclick="clearFilters()" class="btn-secondary" style="margin-top:20px;">
                     <i class="fas fa-times"></i> Limpiar filtros
                 </button>
             </div>
-        </div>
 
-        <!-- Stats & View Toggle -->
-        <div class="products-stats">
-            <div class="products-count">
-                Mostrando <span id="shown-count">0</span> de <span id="total-count">0</span> productos
+            <!-- Stats -->
+            <div class="products-stats">
+                <div class="products-count">
+                    Mostrando <span id="shown-count">0</span> de <span id="total-count">0</span> productos
+                </div>
+
+                <div class="view-toggle">
+                    <button data-view="grid" class="view-btn active"><i class="fas fa-th"></i></button>
+                    <button data-view="list" class="view-btn"><i class="fas fa-list"></i></button>
+                </div>
             </div>
-            <div class="view-toggle">
-                <button class="view-btn active" data-view="grid">
-                    <i class="fas fa-th"></i>
+
+            <!-- GRID -->
+            <div id="products-grid" class="products-grid">
+                <div class="loading-products" style="grid-column:1/-1;text-align:center;padding:4rem;">
+                    <div class="neon-spinner"></div>
+                    <p>Cargando productos...</p>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="pagination"></div>
+
+            <!-- No Products -->
+            <div id="no-products" class="no-products">
+                <i class="fas fa-search"></i>
+                <h3>No se encontraron productos</h3>
+                <p>Prueba con otros filtros o categorías.</p>
+                <button onclick="clearFilters()" class="btn-primary">
+                    <i class="fas fa-times"></i> Limpiar filtros
                 </button>
-                <button class="view-btn" data-view="list">
-                    <i class="fas fa-list"></i>
-                </button>
             </div>
+
         </div>
+    </main>
 
-        <!-- Products Grid -->
-        <div class="products-grid" id="products-grid">
-            <div class="loading-products" style="grid-column:1/-1;text-align:center;padding:4rem 2rem;">
-                <div class="neon-spinner" style="margin:0 auto 1rem;"></div>
-                <p>Cargando productos...</p>
-            </div>
-        </div>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
 
-        <!-- Pagination -->
-        <div class="pagination" id="pagination"></div>
-
-        <!-- No Products Message -->
-        <div class="no-products" id="no-products" style="display:none;">
-            <i class="fas fa-search"></i>
-            <h3>No se encontraron productos</h3>
-            <p>Intenta con otros filtros o términos de búsqueda</p>
-            <button onclick="clearFilters()" class="btn-primary">
-                <i class="fas fa-times"></i> Limpiar filtros
-            </button>
-        </div>
-    </div>
-</main>
-
-<!-- FOOTER -->
-<footer class="main-footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="footer-logo">
-                    <img src="images/logo.png" alt="Logo" class="footer-logo-img">
-                    <div>
-                        <h3 class="footer-title">Autoservice<br><span class="liam">Liam</span> <span class="ya">Yahir</span></h3>
-                        <p class="delivery-brand">
-                            Delivery <span class="liam">Liam</span><span class="ya">YA</span>
-                        </p>
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" class="footer-logo-img">
+                        <div>
+                            <h3 class="footer-title">Autoservice<br><span class="liam">Liam</span> <span class="ya">Yahir</span></h3>
+                            <p class="delivery-brand">Delivery <span class="liam">Liam</span><span class="ya">YA</span></p>
+                        </div>
                     </div>
+                    <p class="footer-desc">Tu autoservice de confianza en Montevideo.</p>
                 </div>
-                <p class="footer-desc">Tu autoservice de confianza en Montevideo. Atención personalizada y productos de calidad.</p>
-                <div class="social-links">
-                    <a href="https://wa.me/59892308828" target="_blank" class="social-link" title="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="#" class="social-link" title="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#" class="social-link" title="Facebook">
-                        <i class="fab fa-facebook"></i>
-                    </a>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Horarios</h4>
+                    <ul class="footer-list">
+                        <li><i class="fas fa-clock"></i> Abierto 24/7</li>
+                        <li><i class="fas fa-truck"></i> Delivery 08:00 - 23:30</li>
+                    </ul>
                 </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Contacto</h4>
+                    <ul class="footer-list">
+                        <li><i class="fas fa-map-marker-alt"></i> Alejandro Fiol de Pereda 1251</li>
+                        <li><i class="fas fa-phone"></i> +598 92 308 828</li>
+                        <li><i class="fas fa-envelope"></i> info@liamyahir.com</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Enlaces</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="products.html">Catálogo</a></li>
+                        <li><a href="categories.html">Categorías</a></li>
+                        <li><a href="delivery.html">Delivery</a></li>
+                        <li><a href="about.html">Nosotros</a></li>
+                        <li><a href="contact.html">Contacto</a></li>
+                    </ul>
+                </div>
+
             </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">Horarios</h4>
-                <ul class="footer-list">
-                    <li><i class="fas fa-clock"></i> Lunes a Domingo: 24/7</li>
-                    <li><i class="fas fa-exclamation-circle"></i> Excepto Martes: 00:00 - 08:00</li>
-                    <li><i class="fas fa-truck"></i> Delivery: 08:00 - 23:30</li>
-                </ul>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Autoservice Liam Yahir - Todos los derechos reservados.</p>
             </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">Contacto</h4>
-                <ul class="footer-list">
-                    <li><i class="fas fa-map-marker-alt"></i> Alejandro Fiol de Pereda 1251, Montevideo</li>
-                    <li><i class="fas fa-phone"></i> +598 92 308 828</li>
-                    <li><i class="fas fa-envelope"></i> info@liamyahir.com</li>
-                </ul>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
+            <button id="cart-close" class="cart-close">&times;</button>
+        </div>
+
+        <div id="cart-items" class="cart-items"></div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal</span><span id="cart-subtotal">$0</span>
             </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">Enlaces Rápidos</h4>
-                <ul class="footer-list">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="products.html"><i class="fas fa-store"></i> Catálogo</a></li>
-                    <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
-                    <li><a href="about.html"><i class="fas fa-users"></i> Nosotros</a></li>
-                    <li><a href="contact.html"><i class="fas fa-phone"></i> Contacto</a></li>
-                    <li><a href="trabaja-con-nosotros.html"><i class="fas fa-briefcase"></i> Trabaja con Nosotros</a></li>
-                </ul>
+            <div class="summary-row">
+                <span>Delivery</span><span id="cart-delivery">$0</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span><span id="cart-total">$0</span>
+            </div>
+
+            <div id="delivery-message" class="delivery-info">
+                Agrega $1500 más para envío gratis
+            </div>
+
+            <div class="cart-actions">
+                <a href="checkout.html" class="btn-checkout">Finalizar Compra</a>
+                <button id="clear-cart" class="btn-clear">Vaciar Carrito</button>
             </div>
         </div>
 
-        <div class="footer-bottom">
-            <p>&copy; 2025 Autoservice Liam Yahir. Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="terminos.html">Términos y Condiciones</a>
-                <a href="privacidad.html">Política de Privacidad</a>
-            </div>
-        </div>
     </div>
-</footer>
 
-<!-- CART SIDEBAR + FLOATING -->
-<div class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-        <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
-        <button class="cart-close" id="cart-close">&times;</button>
-    </div>
-    <div class="cart-items" id="cart-items"></div>
-    <div class="cart-summary">
-        <div class="summary-row">
-            <span>Subtotal</span>
-            <span id="cart-subtotal">$0</span>
-        </div>
-        <div class="summary-row">
-            <span>Delivery</span>
-            <span id="cart-delivery">$0</span>
-        </div>
-        <div class="summary-row total">
-            <span>Total</span>
-            <span id="cart-total">$0</span>
-        </div>
-        <div class="delivery-info" id="delivery-message">
-            Agrega $1500 más para envío gratis
-        </div>
-        <div class="cart-actions">
-            <a href="checkout.html" class="btn-checkout">Finalizar Compra</a>
-            <a href="products.html" class="btn-continue">Seguir Comprando</a>
-            <button class="btn-clear" id="clear-cart">Vaciar Carrito</button>
-        </div>
-    </div>
-</div>
-<div class="cart-overlay" id="cart-overlay"></div>
-<div class="cart-floating" id="cart-floating">
-    <i class="fas fa-shopping-cart"></i>
-    <span class="cart-floating-count" id="cart-floating-count">0</span>
-</div>
+    <div id="cart-overlay" class="cart-overlay"></div>
 
-<!-- AUDIO PLAYER -->
-<div class="audio-player" id="audio-player">
-    <audio id="bg-music" loop>
-        <source src="media/jingle.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
+    <!-- Floating Cart -->
+    <div id="cart-floating" class="cart-floating">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-floating-count" class="cart-floating-count">0</span>
+    </div>
+    <!-- Audio Player -->
+    <div class="audio-player" id="audio-player">
+        <audio id="bg-music" loop>
+            <source src="media/jingle.mp3" type="audio/mpeg">
+        </audio>
         <div class="audio-controls">
-        <button class="audio-btn" id="play-btn" title="Reproducir/Pausar">
-            <i class="fas fa-play"></i>
-        </button>
-        <div class="volume-control">
-            <button class="audio-btn" id="mute-btn" title="Silenciar">
-                <i class="fas fa-volume-up"></i>
-            </button>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" title="Volumen">
+            <button id="play-btn" class="audio-btn"><i class="fas fa-play"></i></button>
+            <div class="volume-control">
+                <button id="mute-btn" class="audio-btn"><i class="fas fa-volume-up"></i></button>
+                <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="0.5">
+            </div>
         </div>
     </div>
-</div>
 
-<!-- SCRIPTS -->
-<script src="js/app.js"></script>
-<script src="js/cart-system.js"></script>
-<script src="js/audio-player.js"></script>
-<script>
-const API_ENDPOINT = '/.netlify/functions/get-products';
-const PAGE_SIZE = 50;
+    <!-- GLOBAL SCRIPTS -->
+    <script src="js/app.js"></script>
+    <script src="js/cart-system.js"></script>
+    <script src="js/audio-player.js"></script>
 
-let productos = [];
-let categorias = [];
-let paginaActual = 1;
-let filtros = {
-    texto: '',
-    categoria: '',
-    precio: '',
-    orden: ''
-};
+    <!-- 🔥 PRODUCT LOGIC WITH NEON + PAGINATION + FILTERS -->
+    <script>
+        const ENDPOINT = "https://deliveryliamyahir.netlify.app/.netlify/functions/get-products";
 
-async function cargarProductos() {
-    try {
-        const resp = await fetch(API_ENDPOINT);
-        const data = await resp.json();
-        productos = data;
-        categorias = [...new Set(productos.map(p => p.categoria).filter(Boolean))].sort();
-        poblarCategorias();
-        renderProductos();
-        renderPaginacion();
-        document.getElementById('total-count').textContent = productos.length;
-    } catch (e) {
-        document.getElementById('products-grid').innerHTML = `<div class="error-msg">❌ Error cargando productos. Intenta más tarde.</div>`;
-    }
-}
+        let productos = [];       // Lista original de 200
+        let filtrados = [];       // Lista filtrada
+        let paginaActual = 1;
+        const porPagina = 50;     // 🔥 50 por página
 
-function poblarCategorias() {
-    const catSelect = document.getElementById('category-filter');
-    catSelect.innerHTML = '<option value="">Todas las categorías</option>';
-    categorias.forEach(cat => {
-        catSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
-}
+        async function cargarProductos() {
+            const grid = document.getElementById("products-grid");
 
-function aplicarFiltrosYOrden() {
-    let filtrados = [...productos];
+            try {
+                const res = await fetch(ENDPOINT);
+                if (!res.ok) throw new Error("HTTP " + res.status);
 
-    // Texto
-    if (filtros.texto.trim()) {
-        filtrados = filtrados.filter(p =>
-            p.nombre.toLowerCase().includes(filtros.texto.toLowerCase()) ||
-            (p.descripcion && p.descripcion.toLowerCase().includes(filtros.texto.toLowerCase()))
-        );
-    }
-    // Categoría
-    if (filtros.categoria) {
-        filtrados = filtrados.filter(p => p.categoria === filtros.categoria);
-    }
-    // Precio
-    if (filtros.precio) {
-        let [min, max] = filtros.precio.split('-').map(Number);
-        filtrados = filtrados.filter(p => Number(p.precio) >= min && Number(p.precio) <= max);
-    }
-    // Orden
-    switch (filtros.orden) {
-        case 'price-asc':
-            filtrados.sort((a, b) => a.precio - b.precio);
-            break;
-        case 'price-desc':
-            filtrados.sort((a, b) => b.precio - a.precio);
-            break;
-        case 'name-asc':
-            filtrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
-            break;
-        case 'name-desc':
-            filtrados.sort((a, b) => b.nombre.localeCompare(a.nombre));
-            break;
-        case 'nuevo':
-            filtrados = filtrados.filter(p => p.nuevo);
-            break;
-        case 'oferta':
-            filtrados = filtrados.filter(p => p.oferta);
-            break;
-        case 'top':
-            filtrados = filtrados.filter(p => p.mas_vendido);
-            break;
-    }
-    return filtrados;
-}
+                productos = await res.json();
+                filtrados = [...productos];
 
-function renderProductos(page = 1) {
-    paginaActual = page;
-    const grid = document.getElementById('products-grid');
-    const noProducts = document.getElementById('no-products');
-    const todosFiltrados = aplicarFiltrosYOrden();
+                cargarCategorias();
+                renderProductos();
+                renderPaginacion();
+                actualizarStats();
 
-    if (todosFiltrados.length === 0) {
-        grid.style.display = 'none';
-        noProducts.style.display = 'block';
-        document.getElementById('shown-count').textContent = 0;
-        return;
-    } else {
-        grid.style.display = '';
-        noProducts.style.display = 'none';
-    }
-    // PAGINACIÓN
-    const desde = (paginaActual - 1) * PAGE_SIZE;
-    const hasta = paginaActual * PAGE_SIZE;
-    const paginados = todosFiltrados.slice(desde, hasta);
+            } catch (err) {
+                console.error("Error cargando productos:", err);
+                grid.innerHTML = `<p style="color:red;text-align:center;">Error al cargar productos.</p>`;
+            }
+        }
 
-    document.getElementById('shown-count').textContent = paginados.length;
+        /* ------------------------
+           CATEGORÍAS DINÁMICAS
+        ------------------------- */
+        function cargarCategorias() {
+            const select = document.getElementById("category-filter");
+            const categorias = [...new Set(productos.map(p => p.categoria))].sort();
 
-    grid.innerHTML = paginados.map(prod => renderBoxProducto(prod)).join('');
-    renderPaginacion(todosFiltrados.length);
-}
+            categorias.forEach(cat => {
+                const op = document.createElement("option");
+                op.value = cat;
+                op.textContent = cat;
+                select.appendChild(op);
+            });
+        }
 
-function renderBoxProducto(p) {
-    let badge = '';
-    if (p.nuevo) badge += `<span class="badge badge-nuevo">Nuevo</span>`;
-    if (p.oferta) badge += `<span class="badge badge-oferta">Oferta</span>`;
-    if (p.mas_vendido) badge += `<span class="badge badge-destacado">Destacado</span>`;
-    // Imagen fallback
-    let img = (p.imagen && p.imagen.includes('/images/products/')) ? p.imagen : `images/products/${p.codigo_barra}.jpg`;
-    return `
-    <div class="product-box">
-        <div class="product-img-wrap">
-            <img src="${img}" alt="${p.nombre}" loading="lazy" class="product-img" onerror="this.src='images/products/no-image.png'">
-            <div class="badges">${badge}</div>
-        </div>
-        <div class="product-info">
-            <h3 class="product-name" title="${p.nombre}">${p.nombre}</h3>
-            <div class="product-brand">${p.marca || ''}</div>
-            <div class="product-price" style="text-align:center;">$${p.precio}</div>
-        </div>
-        <div class="product-actions">
-            <button class="btn-add" onclick="addToCart('${p.codigo_barra}')">
-                <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-        </div>
-    </div>
-    `;
-}
+        /* ------------------------
+           FILTROS
+        ------------------------- */
+        function aplicarFiltros() {
+            let lista = [...productos];
 
-function renderPaginacion(total=0) {
-    const todosFiltrados = aplicarFiltrosYOrden();
-    total = total || todosFiltrados.length;
-    const totalPaginas = Math.ceil(total / PAGE_SIZE);
-    const pagDiv = document.getElementById('pagination');
-    if (totalPaginas <= 1) {
-        pagDiv.innerHTML = '';
-        return;
-    }
-    pagDiv.innerHTML = '';
-    for (let i = 1; i <= totalPaginas; i++) {
-        pagDiv.innerHTML += `<button class="page-btn${paginaActual===i?' active':''}" onclick="renderProductos(${i})">${i}</button>`;
-    }
-}
+            // Buscador
+            const search = document.getElementById("search-input").value.toLowerCase();
+            if (search) {
+                lista = lista.filter(p =>
+                    p.nombre.toLowerCase().includes(search) ||
+                    (p.marca || "").toLowerCase().includes(search)
+                );
+            }
 
-// FILTROS y EVENTOS
-document.addEventListener('DOMContentLoaded', function() {
-    cargarProductos();
+            // Categoría
+            const cat = document.getElementById("category-filter").value;
+            if (cat) lista = lista.filter(p => p.categoria === cat);
 
-    document.getElementById('search-input').addEventListener('input', function() {
-        filtros.texto = this.value;
-        renderProductos(1);
-    });
-    document.getElementById('category-filter').addEventListener('change', function() {
-        filtros.categoria = this.value;
-        renderProductos(1);
-    });
-    document.getElementById('price-filter').addEventListener('change', function() {
-        filtros.precio = this.value;
-        renderProductos(1);
-    });
-    document.getElementById('sort-filter').addEventListener('change', function() {
-        filtros.orden = this.value;
-        renderProductos(1);
-    });
+            // Rango de precio
+            const rango = document.getElementById("price-filter").value;
+            if (rango) {
+                const [min, max] = rango.split("-").map(Number);
+                lista = lista.filter(p => p.precio >= min && p.precio <= max);
+            }
 
-    window.clearFilters = function() {
-        filtros = { texto:'', categoria:'', precio:'', orden:'' };
-        document.getElementById('search-input').value = '';
-        document.getElementById('category-filter').value = '';
-        document.getElementById('price-filter').value = '';
-        document.getElementById('sort-filter').value = '';
-        renderProductos(1);
-    };
-});
+            // Sorting
+            const sort = document.getElementById("sort-filter").value;
+            switch (sort) {
+                case "name-asc":
+                    lista.sort((a,b)=> a.nombre.localeCompare(b.nombre)); break;
+                case "name-desc":
+                    lista.sort((a,b)=> b.nombre.localeCompare(a.nombre)); break;
+                case "price-asc":
+                    lista.sort((a,b)=> a.precio - b.precio); break;
+                case "price-desc":
+                    lista.sort((a,b)=> b.precio - a.precio); break;
+                case "nuevo":
+                    lista = lista.filter(p => p.nuevo); break;
+                case "oferta":
+                    lista = lista.filter(p => p.oferta); break;
+                case "destacado":
+                    lista = lista.filter(p => p.mas_vendido); break;
+            }
 
-// BADGE CSS
-const style = document.createElement('style');
-style.innerHTML = `
-.badge { display:inline-block; padding:2px 7px; border-radius:7px; font-size:12px; margin:2px 2px 0 0; }
-.badge-nuevo { background:#0080ff; color:#fff; }
-.badge-oferta { background:#ff0055; color:#fff; }
-.badge-destacado { background:#ffab00; color:#222; }
-.product-img-wrap { position:relative; }
-.badges { position:absolute; left:0; top:0; z-index:2; display:flex; flex-direction:column; gap:2px;}
-.product-box { background:rgba(255,255,255,0.03); border-radius:12px; box-shadow:0 1px 12px 0 rgba(0,255,255,0.03); padding:15px; display:flex; flex-direction:column; justify-content:space-between; min-height:320px; }
-.product-name { font-size:1.1rem; font-weight:600; }
-.product-brand { font-size:.93rem; color:#00ffff; }
-.product-actions { margin-top:7px; }
-.btn-add { background:linear-gradient(90deg,#00ffff,#0044ff);color:#fff;padding:6px 17px;border-radius:6px;border:none;cursor:pointer;font-size:1em;transition:.2s }
-.btn-add:hover { filter:brightness(1.1);}
-.product-price { font-size:1.3em; margin:10px auto; text-align:center;}
-`;
-document.head.appendChild(style);
-</script>
+            filtrados = lista;
+            paginaActual = 1;
+            renderProductos();
+            renderPaginacion();
+            actualizarStats();
+        }
+
+        function clearFilters() {
+            document.getElementById("search-input").value = "";
+            document.getElementById("category-filter").value = "";
+            document.getElementById("price-filter").value = "";
+            document.getElementById("sort-filter").value = "";
+            aplicarFiltros();
+        }
+
+        /* ------------------------
+           PAGINACIÓN
+        ------------------------- */
+        function renderPaginacion() {
+            const totalPaginas = Math.ceil(filtrados.length / porPagina);
+            const pag = document.getElementById("pagination");
+            pag.innerHTML = "";
+
+            for (let i=1; i<=totalPaginas; i++) {
+                const btn = document.createElement("button");
+                btn.className = "page-btn" + (i === paginaActual ? " active" : "");
+                btn.textContent = i;
+                btn.onclick = () => {
+                    paginaActual = i;
+                    renderProductos();
+                    renderPaginacion();
+                };
+                pag.appendChild(btn);
+            }
+        }
+
+        /* ------------------------
+           GENERAR GRID
+        ------------------------- */
+        function renderProductos() {
+            const grid = document.getElementById("products-grid");
+            grid.innerHTML = "";
+
+            const inicio = (paginaActual - 1) * porPagina;
+            const pagina = filtrados.slice(inicio, inicio + porPagina);
+
+            if (!pagina.length) {
+                document.getElementById("no-products").style.display = "block";
+                return;
+            } else {
+                document.getElementById("no-products").style.display = "none";
+            }
+
+            pagina.forEach(p => {
+                const div = document.createElement("div");
+                div.className = "producto-box";
+
+                // BADGES
+                let badges = "";
+                if (p.oferta)      badges += `<span class="badge-oferta">OFERTA</span>`;
+                if (p.nuevo)       badges += `<span class="badge-nuevo">NUEVO</span>`;
+                if (p.mas_vendido) badges += `<span class="badge-destacado">⭐</span>`;
+
+                div.innerHTML = `
+                    ${badges}
+                    <img src="${p.imagen}" alt="${p.nombre}">
+                    <h3 style="font-size:1rem;min-height:45px;">${p.nombre}</h3>
+                    <p class="producto-precio">$${p.precio.toFixed(2)}</p>
+
+                    <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin:10px 0;">
+                        <button class="menos" data-id="${p.id}">-</button>
+                        <span id="cantidad-${p.id}">1</span>
+                        <button class="mas" data-id="${p.id}">+</button>
+                    </div>
+
+                    <button class="btn-agregar" data-id="${p.id}">Agregar al carrito</button>
+                `;
+
+                grid.appendChild(div);
+            });
+
+            inicializarEventosProductos(pagina);
+        }
+
+        function actualizarStats() {
+            document.getElementById("total-count").textContent = productos.length;
+            document.getElementById("shown-count").textContent = filtrados.length;
+        }
+
+        /* ------------------------
+           BOTONES + CARRITO
+        ------------------------- */
+        function inicializarEventosProductos(lista) {
+            document.querySelectorAll(".mas").forEach(btn => {
+                btn.onclick = () => {
+                    const id = btn.dataset.id;
+                    const el = document.getElementById(`cantidad-${id}`);
+                    el.textContent = Number(el.textContent) + 1;
+                };
+            });
+
+            document.querySelectorAll(".menos").forEach(btn => {
+                btn.onclick = () => {
+                    const id = btn.dataset.id;
+                    const el = document.getElementById(`cantidad-${id}`);
+                    el.textContent = Math.max(1, Number(el.textContent) - 1);
+                };
+            });
+
+            document.querySelectorAll(".btn-agregar").forEach(btn => {
+                btn.onclick = () => {
+                    const id = btn.dataset.id;
+                    const prod = filtrados.find(x => x.id == id);
+                    const cantidad = Number(document.getElementById(`cantidad-${id}`).textContent);
+
+                    addToCart({ ...prod, quantity: cantidad });
+
+                    // JINGLE
+                    const audio = new Audio("media/jingle.mp3");
+                    audio.volume = 0.5;
+                    audio.play();
+                };
+            });
+        }
+
+        document.getElementById("search-input").addEventListener("input", aplicarFiltros);
+        document.getElementById("category-filter").addEventListener("change", aplicarFiltros);
+        document.getElementById("sort-filter").addEventListener("change", aplicarFiltros);
+        document.getElementById("price-filter").addEventListener("change", aplicarFiltros);
+
+        document.addEventListener("DOMContentLoaded", cargarProductos);
+    </script>
+
 </body>
 </html>
