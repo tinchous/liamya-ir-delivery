@@ -1,24 +1,6 @@
 /* ===== RESET & BASE STYLES ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    /* Colors */
-    --primary-dark: #0a0a0a;
-    --secondary-dark: #111119;
-    --tertiary-dark: #1a1a2e;
-
-    --neon-cyan: #00ffff;
-    --neon-pink: #ff00ff;
-    --neon-green: #00ff00;
-    --neon-yellow: #ffff00;
-    --neon-purple: #9d00ff;
-
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
+    o
     --text-muted: #888888;
 
     --glass-bg: rgba(30, 30, 40, 0.8);
@@ -939,28 +921,4 @@ h1, h2, h3, h4, h5, h6 {
     #volume-slider {
         width: 60px;
     }
-}
-.categoria-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 1.5rem;
-    text-align: center;
-    transition: all 0.4s;
-    text-decoration: none;
-    color: white;
-    box-shadow: 0 0 20px rgba(0,255,255,0.3);
-}
-.categoria-card:hover {
-    transform: translateY(-15px) scale(1.05);
-    box-shadow: 0 0 40px rgba(0,255,255,0.8);
-}
-.icono-gigante { font-size: 4rem; margin-bottom: 1rem; }
-.neon-title {
-    text-align: center;
-    font-size: 3rem;
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(0,255,255,0.8);
-    margin: 3rem 0 2rem;
 }
