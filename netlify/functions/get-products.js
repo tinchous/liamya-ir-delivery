@@ -1,16 +1,5 @@
 import { Client } from 'pg';
 
-if (event.httpMethod === 'OPTIONS') {
-  return {
-    statusCode: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    },
-  };
-}
-
 
 export async function handler(event, context) {
   const client = new Client({
