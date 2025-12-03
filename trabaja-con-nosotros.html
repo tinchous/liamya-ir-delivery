@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabaja con Nosotros - Autoservice Liam Yahir</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/neon-effects.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .work-with-us-page {
+            padding-top: 120px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #0f0f1a 100%);
+        }
+
+        .work-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(rgba(10, 10, 20, 0.9), rgba(10, 10, 20, 0.9)),
+                        url('images/work-bg.jpg') center/cover no-repeat;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .work-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .work-subtitle {
+            color: #ccc;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .benefits-section {
+            padding: 3rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(30, 30, 40, 0.8);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffff;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00ffff;
+        }
+
+        .positions-section {
+            padding: 3rem 0;
+        }
+
+        .positions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .position-card {
+            background: rgba(30, 30, 40, 0.8);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .position-title {
+            color: #00ffff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .position-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .position-list li {
+            padding: 0.5rem 0;
+            color: #ccc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .position-list li:last-child {
+            border-bottom: none;
+        }
+
+        .position-list li i {
+            color: #00ff00;
+            margin-right: 10px;
+        }
+
+        .application-form {
+            background: rgba(30, 30, 40, 0.8);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-title {
+            color: #00ffff;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .file-upload i {
+            font-size: 2rem;
+            color: #00ffff;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn-apply {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00ffff, #00ccff);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .work-title {
+                font-size: 2.2rem;
+            }
+
+            .application-form {
+                padding: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Container -->
+    <div id="header-container"></div>
+
+    <!-- Work With Us Page -->
+    <main class="work-with-us-page">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="work-hero">
+                <h1 class="work-title">Trabaja con Nosotros</h1>
+                <p class="work-subtitle">
+                    Únete a nuestro equipo y sé parte del autoservice más innovador de Montevideo.
+                    Ofrecemos oportunidades de crecimiento, ambiente dinámico y beneficios competitivos.
+                </p>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="benefits-section">
+                <h2 class="section-title">Por qué trabajar con nosotros</h2>
+                <p class="section-subtitle">Ofrecemos un ambiente de trabajo único con grandes beneficios</p>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>Salario competitivo</h3>
+                        <p>Remuneración acorde al mercado + bonos por desempeño</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Flexibilidad horaria</h3>
+                        <p>Turnos rotativos que se adaptan a tus necesidades</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Capacitación constante</h3>
+                        <p>Programas de entrenamiento y desarrollo profesional</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Ambiente familiar</h3>
+                        <p>Trabaja en un ambiente cordial y de respeto mutuo</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Oportunidades de crecimiento</h3>
+                        <p>Posibilidades de ascenso según desempeño y antigüedad</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Beneficios adicionales</h3>
+                        <p>Descuentos en productos y servicios del autoservice</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Open Positions -->
+            <section class="positions-section">
+                <h2 class="section-title">Posiciones Disponibles</h2>
+                <p class="section-subtitle">Estamos buscando talento para los siguientes puestos</p>
+
+                <div class="positions-grid">
+                    <div class="position-card">
+                        <h3 class="position-title">📦 Repartidor Delivery</h3>
+                        <p>Encargado de entregas a domicilio en Montevideo</p>
+
+                        <ul class="position-list">
+                            <li><i class="fas fa-check"></i> Licencia de conducir vigente</li>
+                            <li><i class="fas fa-check"></i> Conocimiento de la ciudad</li>
+                            <li><i class="fas fa-check"></i> Buena presencia y trato al cliente</li>
+                            <li><i class="fas fa-check"></i> Disponibilidad horaria flexible</li>
+                            <li><i class="fas fa-check"></i> Responsabilidad y puntualidad</li>
+                        </ul>
+
+                        <button class="btn-small apply-btn" data-position="Repartidor">
+                            Postularme
+                        </button>
+                    </div>
+
+                    <div class="position-card">
+                        <h3 class="position-title">🏪 Cajero/Atención al Cliente</h3>
+                        <p>Atención en mostrador y manejo de caja registradora</p>
+
+                        <ul class="position-list">
+                            <li><i class="fas fa-check"></i> Experiencia en atención al cliente</li>
+                            <li><i class="fas fa-check"></i> Manejo de caja y POS</li>
+                            <li><i class="fas fa-check"></i> Buena comunicación</li>
+                            <li><i class="fas fa-check"></i> Organización y limpieza</li>
+                            <li><i class="fas fa-check"></i> Disponibilidad para turnos rotativos</li>
+                        </ul>
+
+                        <button class="btn-small apply-btn" data-position="Cajero">
+                            Postularme
+                        </button>
+                    </div>
+
+                    <div class="position-card">
+                        <h3 class="position-title">📦 Reponedor de Stock</h3>
+                        <p>Control y reposición de productos en góndolas</p>
+
+                        <ul class="position-list">
+                            <li><i class="fas fa-check"></i> Organización y orden</li>
+                            <li><i class="fas fa-check"></i> Control de inventarios</li>
+                            <li><i class="fas fa-check"></i> Fuerza física (levantar peso)</li>
+                            <li><i class="fas fa-check"></i> Trabajo en equipo</li>
+                            <li><i class="fas fa-check"></i> Disponibilidad para horarios nocturnos</li>
+                        </ul>
+
+                        <button class="btn-small apply-btn" data-position="Reponedor">
+                            Postularme
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Application Form -->
+            <section class="application-form">
+                <h2 class="form-title">Postulate a Nuestro Equipo</h2>
+
+                <form id="application-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Nombre completo *</label>
+                            <input type="text" class="form-input" id="applicant-name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Teléfono *</label>
+                            <input type="tel" class="form-input" id="applicant-phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-input" id="applicant-email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Posición solicitada *</label>
+                            <select class="form-select" id="applicant-position" required>
+                                <option value="">Selecciona una posición</option>
+                                <option value="Repartidor">Repartidor Delivery</option>
+                                <option value="Cajero">Cajero/Atención al Cliente</option>
+                                <option value="Reponedor">Reponedor de Stock</option>
+                                <option value="Otro">Otra posición</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Experiencia previa</label>
+                        <textarea class="form-textarea" id="applicant-experience"
+                                  placeholder="Describe tu experiencia laboral relacionada..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Disponibilidad horaria</label>
+                        <textarea class="form-textarea" id="applicant-availability"
+                                  placeholder="Indica tus horarios disponibles..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Adjuntar CV (PDF o Word)</label>
+                        <div class="file-upload" onclick="document.getElementById('cv-file').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Haz clic para subir tu currículum</p>
+                            <small>Máximo 5MB - Formatos: PDF, DOC, DOCX</small>
+                            <input type="file" id="cv-file" class="file-input" accept=".pdf,.doc,.docx">
+                        </div>
+                        <div id="file-name" style="margin-top: 10px; color: #ccc;"></div>
+                    </div>
+
+                    <button type="submit" class="btn-apply">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitud
+                    </button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Container -->
+    <div id="footer-container"></div>
+
+    <!-- Cart Container -->
+    <div id="cart-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/components.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/cart-system.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // File upload display
+            const fileInput = document.getElementById('cv-file');
+            const fileName = document.getElementById('file-name');
+
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileName.textContent = `Archivo seleccionado: ${this.files[0].name}`;
+                } else {
+                    fileName.textContent = '';
+                }
+            });
+
+            // Apply buttons
+            document.querySelectorAll('.apply-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const position = this.dataset.position;
+                    document.getElementById('applicant-position').value = position;
+                    document.getElementById('application-form').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Form submission
+            document.getElementById('application-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get form data
+                const formData = {
+                    name: document.getElementById('applicant-name').value,
+                    phone: document.getElementById('applicant-phone').value,
+                    email: document.getElementById('applicant-email').value,
+                    position: document.getElementById('applicant-position').value,
+                    experience: document.getElementById('applicant-experience').value,
+                    availability: document.getElementById('applicant-availability').value,
+                    cv: fileInput.files.length > 0 ? fileInput.files[0].name : 'No adjuntado'
+                };
+
+                // Validate
+                if (!formData.name || !formData.phone || !formData.email || !formData.position) {
+                    alert('Por favor completa los campos obligatorios (*)');
+                    return;
+                }
+
+                // Create WhatsApp message
+                const message = `*SOLICITUD DE EMPLEO - Autoservice Liam Yahir*
+
+👤 *Datos del solicitante:*
+• Nombre: ${formData.name}
+• Teléfono: ${formData.phone}
+• Email: ${formData.email}
+• Posición solicitada: ${formData.position}
+
+📋 *Experiencia:*
+${formData.experience || 'No especificada'}
+
+🕒 *Disponibilidad:*
+${formData.availability || 'No especificada'}
+
+📎 *CV adjunto:* ${formData.cv}
+
+⏰ *Fecha de solicitud:* ${new Date().toLocaleString('es-UY')}`;
+
+                // Encode for WhatsApp
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/59892308828?text=${encodedMessage}`;
+
+                // Open WhatsApp
+                window.open(whatsappUrl, '_blank');
+
+                // Reset form
+                this.reset();
+                fileName.textContent = '';
+
+                // Show success message
+                alert('¡Solicitud enviada! Se abrirá WhatsApp para que envíes tu información.');
+            });
+        });
+    </script>
+<!-- Audio Player -->
+<div class="audio-player" id="audio-player">
+    <audio id="bg-music" loop>
+        <source src="media/jingle.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    <div class="audio-controls">
+        <button class="audio-btn" id="play-btn" title="Reproducir/Pausar">
+            <i class="fas fa-play"></i>
+        </button>
+        <div class="volume-control">
+            <button class="audio-btn" id="mute-btn" title="Silenciar">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" title="Volumen">
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/app.js"></script>
+<script src="js/cart-system.js"></script>
+<script src="js/audio-player.js"></script>
+</body>
+</html>

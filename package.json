@@ -1,0 +1,21 @@
+{
+  "name": "autoservice-liam-yahir",
+  "version": "1.0.0",
+  "description": "Sistema de delivery y gestión de productos",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "csv-parse": "^5.5.6",
+    "prisma": "^6.19.0"
+  }
+}

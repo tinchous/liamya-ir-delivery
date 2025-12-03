@@ -1,0 +1,4 @@
+id,nombre,email,telefono,rol,password,fecha_creacion,estado
+emp-001,Admin Principal,admin@liamya.com,99999999,ADMINISTRATIVO,$2a$10$hashed_password,2024-01-15,ACTIVO
+emp-002,Supervisor 1,supervisor@liamya.com,98888888,SUPERVISOR,$2a$10$hashed_password,2024-01-15,ACTIVO
+emp-003,Empleado 1,empleado@liamya.com,97777777,EMPLEADO,$2a$10$hashed_password,2024-01-15,ACTIVO
