@@ -1,56 +1,37 @@
-// ===== COMPONENT LOADER =====
 class ComponentLoader {
-    static loadComponents() {
-        ComponentLoader.initCart();
-    }
+  static loadComponents() {
+    this.initCart();
+    this.loadHeaderFooter();
+  }
 
-    static initCart() {
-        const sidebar = document.getElementById('cart-sidebar');
-        const overlay = document.getElementById('cart-overlay');
-        const floatingBtn = document.getElementById('cart-floating');
-        const clearCartBtn = document.getElementById('clear-cart');
-        const countEl = document.getElementById('cart-floating-count');
-        const totalEl = document.getElementById('cart-total');
-        const itemsEl = document.getElementById('cart-items');
+  static loadHeaderFooter() {
+    fetch('header.html').then(r => r.text()).then(html => document.getElementById('header-container').innerHTML = html);
+    fetch('footer.html').then(r => r.text()).then(html => document.getElementById('footer-container').innerHTML = html);
+  }
 
-        if (!sidebar || !floatingBtn) return;
+  static initCart() {
+    const sidebar = document.getElementById('cart-sidebar');
+    const overlay = document.getElementById('cart-overlay');
+    const floating = document.getElementById('cart-floating');
+    const close = document.getElementById('cart-close');
 
-        const toggleCart = () => {
-            sidebar.classList.toggle('active');
-        };
+    if (!sidebar || !floating) return;
 
-        floatingBtn.addEventListener('click', toggleCart);
-        if (clearCartBtn) clearCartBtn.addEventListener('click', () => cartSystem.clear());
+    const toggleCart = () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    };
 
-        // Render inicial
-        cartSystem.subscribe((items) => {
-            countEl.textContent = items.reduce((sum, item) => sum + item.quantity, 0);
-            totalEl.textContent = "$" + cartSystem.getTotals().total.toFixed(2);
+    floating.onclick = toggleCart;
+    overlay.onclick = toggleCart;
+    if (close) close.onclick = toggleCart;
 
-            if (itemsEl) {
-                itemsEl.innerHTML = items.length === 0
-                    ? '<p>Tu carrito está vacío</p>'
-                    : items.map(item => `
-                        <div style="margin-bottom: 8px;">
-                            ${item.quantity}x ${item.nombre} - $${item.precio}
-                        </div>
-                    `).join('');
-            }
-        });
-    }
+    cartSystem.subscribe((items) => {
+      document.getElementById('cart-floating-count').textContent = items.reduce((s,i) => s + i.quantity, 0);
+      document.getElementById('cart-total').textContent = '$' + cartSystem.getTotals().total.toFixed(0);
+      document.getElementById('cart-items').innerHTML = items.length === 0 ? '<p>Carrito vacío</p>' : items.map(i => `<div><strong>${i.quantity}x ${i.nombre}</strong> - $${i.precio * i.quantity}</div>`).join('');
+    });
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    ComponentLoader.loadComponents();
-});
-// FIX CARRITO DEFINITIVO
-document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('cart-sidebar');
-  const overlay = document.getElementById('cart-overlay');
-  const floating = document.getElementById('cart-floating');
-  const close = document.getElementById('cart-close');
-
-  if (floating) floating.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
-  if (overlay) overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-  if (close) close.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-});
+document.addEventListener('DOMContentLoaded', () => ComponentLoader.loadComponents());
