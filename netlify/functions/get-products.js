@@ -1,5 +1,16 @@
-// netlify/functions/get-products.js
 import { Client } from 'pg';
+
+if (event.httpMethod === 'OPTIONS') {
+  return {
+    statusCode: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    },
+  };
+}
+
 
 export async function handler(event, context) {
   const client = new Client({
@@ -9,7 +20,6 @@ export async function handler(event, context) {
 
   try {
     await client.connect();
-
     const query = `
       SELECT
         id,
@@ -34,6 +44,8 @@ export async function handler(event, context) {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
       },
       body: JSON.stringify(rows),
     };
@@ -41,6 +53,11 @@ export async function handler(event, context) {
     console.error('❌ Error en get-products:', err);
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      },
       body: JSON.stringify({
         error: 'Error al obtener productos',
         detail: err.message,
