@@ -4,9 +4,8 @@ async function cargarProductos() {
 
   try {
     // Detecta automáticamente si está en Netlify o local
-    const baseURL = window.location.hostname.includes('netlify.app')
-      ? '/.netlify/functions/get-products'
-      : 'http://localhost:8888/.netlify/functions/get-products';
+     const baseURL = 'https://deliveryliamyahir.netlify.app/.netlify/functions/get-products';
+
 
     const res = await fetch(baseURL);
     if (!res.ok) throw new Error('Respuesta no válida del servidor');
