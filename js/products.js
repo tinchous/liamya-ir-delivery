@@ -3,9 +3,15 @@ async function cargarProductos() {
   const buscador = document.getElementById('buscador');
 
   try {
-    const res = await fetch('/.netlify/functions/get-products');
-    const productos = await res.json();
+    // Detecta automáticamente si está en Netlify o local
+    const baseURL = window.location.hostname.includes('netlify.app')
+      ? '/.netlify/functions/get-products'
+      : 'http://localhost:8888/.netlify/functions/get-products';
 
+    const res = await fetch(baseURL);
+    if (!res.ok) throw new Error('Respuesta no válida del servidor');
+
+    const productos = await res.json();
     let lista = productos;
     renderProductos(lista);
 
@@ -22,6 +28,7 @@ async function cargarProductos() {
     contenedor.innerHTML = `<p style="color:red;">Error al cargar productos.</p>`;
   }
 }
+
 
 function renderProductos(productos) {
   const contenedor = document.getElementById('productos-container');
