@@ -1,553 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo - Autoservice Liam Yahir</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos | Autoservice Liam Yahir</title>
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/neon-effects.css" />
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/neon-effects.css">
-    <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Poppins', sans-serif;
+    }
+    .productos-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .producto-card {
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 10px;
+      text-align: center;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+    .producto-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ffcc;
+      box-shadow: 0 0 10px #00ffcc40;
+    }
+    .producto-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+    .producto-card h3 {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+      color: #00ffcc;
+    }
+    .producto-card .precio {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+    }
+    .producto-card .etiquetas span {
+      display: inline-block;
+      margin: 0.2rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: #000;
+    }
+    .etiqueta-oferta { background: #ffeb3b; }
+    .etiqueta-nuevo { background: #4caf50; color: #fff; }
+    .etiqueta-mas-vendido { background: #ff5722; color: #fff; }
 
-    <style>
-        .products-page {
-            padding-top: 120px;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #0f0f1a 100%);
-        }
-
-        .products-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .products-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #00ffff, #ff00ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .products-subtitle {
-            color: #ccc;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .filters-container {
-            background: rgba(30, 30, 40, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .filter-label {
-            margin-bottom: 0.5rem;
-            color: #00ffff;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .filter-select, .filter-input {
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .filter-select:focus, .filter-input:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.2);
-        }
-
-        .price-range {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .price-value {
-            color: #00ff00;
-            font-weight: 600;
-            min-width: 60px;
-        }
-
-        .products-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .products-count {
-            font-size: 1.1rem;
-        }
-
-        .products-count span {
-            color: #00ffff;
-            font-weight: 600;
-        }
-
-        .view-toggle {
-            display: flex;
-            gap: 10px;
-        }
-
-        .view-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .view-btn.active {
-            background: #00ffff;
-            color: #000;
-            border-color: #00ffff;
-        }
-
-        .no-products {
-            text-align: center;
-            padding: 4rem 2rem;
-            display: none;
-        }
-
-        .no-products i {
-            font-size: 4rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .no-products h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .no-products p {
-            color: #999;
-            margin-bottom: 2rem;
-        }
-
-        .pagination {
-            margin-top: 3rem;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .page-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .page-btn:hover {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: #00ffff;
-        }
-
-        .page-btn.active {
-            background: #00ffff;
-            color: #000;
-            border-color: #00ffff;
-        }
-    </style>
+    .search-container {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .search-container input {
+      width: 80%;
+      max-width: 400px;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      border: 1px solid #00ffcc;
+      background-color: #222;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="main-header glass-effect">
-        <div class="container header-container">
-            <!-- Logo -->
-            <div class="logo">
-                <img src="images/logo.png" alt="Autoservice Liam Yahir" class="logo-img">
-                <div class="logo-text">
-                    <h1 class="logo-title">Autoservice</h1>
-                    <p class="logo-subtitle"><span class="liam">Liam</span> <span class="ya">Yahir</span></p>
-                </div>
-            </div>
 
-            <!-- Navigation -->
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li class="nav-item"><a href="products.html" class="nav-link active"><i class="fas fa-store"></i> Catálogo</a></li>
-                    <li class="nav-item"><a href="categories.html" class="nav-link"><i class="fas fa-tags"></i> Categorías</a></li>
-                    <li class="nav-item"><a href="delivery.html" class="nav-link"><i class="fas fa-truck"></i> Delivery</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link"><i class="fas fa-users"></i> Nosotros</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-phone"></i> Contacto</a></li>
+  <div id="header"></div>
 
-                </ul>
-            </nav>
-
-            <!-- User Actions -->
-            <div class="user-actions">
-                <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Ingresar</a>
-                <button class="cart-btn" id="cart-toggle">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
-                </button>
-            </div>
-
-            <!-- Mobile Menu Toggle -->
-            <button class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
-
-    <!-- Products Page -->
-    <main class="products-page">
-        <div class="container">
-            <div class="products-header">
-                <h1 class="products-title">Nuestro Catálogo</h1>
-                <p class="products-subtitle">Explora todos nuestros productos disponibles. Filtra por categoría, precio o busca lo que necesites.</p>
-            </div>
-
-            <!-- Filters -->
-            <div class="filters-container">
-                <div class="filter-grid">
-                    <div class="filter-group">
-                        <label class="filter-label">
-                            <i class="fas fa-search"></i> Buscar producto
-                        </label>
-                        <input type="text"
-                               id="search-input"
-                               class="filter-input"
-                               placeholder="Escribe para buscar...">
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">
-                            <i class="fas fa-tags"></i> Categoría
-                        </label>
-                        <select id="category-filter" class="filter-select">
-                            <option value="">Todas las categorías</option>
-                            <!-- Categories will be loaded dynamically -->
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">
-                            <i class="fas fa-sort-amount-down"></i> Ordenar por
-                        </label>
-                        <select id="sort-filter" class="filter-select">
-                            <option value="">Predeterminado</option>
-                            <option value="price-asc">Menor precio</option>
-                            <option value="price-desc">Mayor precio</option>
-                            <option value="name-asc">A - Z</option>
-                            <option value="name-desc">Z - A</option>
-                            <option value="popular">Más vendidos</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label class="filter-label">
-                            <i class="fas fa-filter"></i> Rango de precio
-                        </label>
-                        <div class="price-range">
-                            <span class="price-value" id="price-value">$0 - $10000</span>
-                            <input type="range"
-                                   id="price-filter"
-                                   min="0"
-                                   max="10000"
-                                   value="10000"
-                                   class="filter-input"
-                                   style="flex: 1;">
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button onclick="clearFilters()" class="btn-secondary" style="flex: 1;">
-                        <i class="fas fa-times"></i> Limpiar filtros
-                    </button>
-                </div>
-            </div>
-
-            <!-- Products Stats -->
-            <div class="products-stats">
-                <div class="products-count">
-                    Mostrando <span id="shown-count">0</span> de <span id="total-count">0</span> productos
-                </div>
-                <div class="view-toggle">
-                    <button class="view-btn active" data-view="grid">
-                        <i class="fas fa-th"></i>
-                    </button>
-                    <button class="view-btn" data-view="list">
-                        <i class="fas fa-list"></i>
-                    </button>
-                </div>
-            </div>
-
-<!-- Modificar el contenedor de productos -->
-           <div class="products-grid" id="products-grid">
-                <div class="loading-products" style="grid-column: 1/-1; text-align:center; padding:4rem 2rem;">
-                     <div class="neon-spinner" style="margin:0 auto 1rem;"></div>
-                     <p>Cargando productos...</p>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination" id="pagination">
-                <!-- Pagination will be loaded dynamically -->
-            </div>
-
-            <!-- No Products Message -->
-            <div class="no-products" id="no-products">
-                <i class="fas fa-search"></i>
-                <h3>No se encontraron productos</h3>
-                <p>Intenta con otros filtros o términos de búsqueda</p>
-                <button onclick="clearFilters()" class="btn-primary">
-                    <i class="fas fa-times"></i> Limpiar filtros
-                </button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="Logo" class="footer-logo-img">
-                        <div>
-                            <h3 class="footer-title">Autoservice<br><span class="liam">Liam</span> <span class="ya">Yahir</span></h3>
-                            <p class="delivery-brand">
-                                Delivery <span class="liam">Liam</span><span class="ya">YA</span>
-                            </p>
-                        </div>
-                    </div>
-                    <p class="footer-desc">Tu autoservice de confianza en Montevideo. Atención personalizada y productos de calidad.</p>
-                    <div class="social-links">
-                        <a href="https://wa.me/59892308828" target="_blank" class="social-link" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Horarios</h4>
-                    <ul class="footer-list">
-                        <li><i class="fas fa-clock"></i> Lunes a Domingo: 24/7</li>
-                        <li><i class="fas fa-exclamation-circle"></i> Excepto Martes: 00:00 - 08:00</li>
-                        <li><i class="fas fa-truck"></i> Delivery: 08:00 - 23:30</li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Contacto</h4>
-                    <ul class="footer-list">
-                        <li><i class="fas fa-map-marker-alt"></i> Alejandro Fiol de Pereda 1251, Montevideo</li>
-                        <li><i class="fas fa-phone"></i> +598 92 308 828</li>
-                        <li><i class="fas fa-envelope"></i> info@liamyahir.com</li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4 class="footer-heading">Enlaces Rápidos</h4>
-                    <ul class="footer-list">
-                        <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                        <li><a href="products.html"><i class="fas fa-store"></i> Catálogo</a></li>
-                        <li><a href="delivery.html"><i class="fas fa-truck"></i> Delivery</a></li>
-                        <li><a href="about.html"><i class="fas fa-users"></i> Nosotros</a></li>
-                        <li><a href="contact.html"><i class="fas fa-phone"></i> Contacto</a></li>
-                        <li><a href="trabaja-con-nosotros.html"><i class="fas fa-briefcase"></i> Trabaja con Nosotros</a></li>
-                        <li><a href="login.html"><i class="fas fa-user"></i> Mi Cuenta</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Autoservice Liam Yahir. Todos los derechos reservados.</p>
-                <div class="footer-links">
-                    <a href="terminos.html">Términos y Condiciones</a>
-                    <a href="privacidad.html">Política de Privacidad</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h3><i class="fas fa-shopping-cart"></i> Tu Carrito</h3>
-            <button class="cart-close" id="cart-close">&times;</button>
-        </div>
-
-        <div class="cart-items" id="cart-items">
-            <!-- Cart items will be loaded here -->
-        </div>
-
-        <div class="cart-summary">
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="cart-subtotal">$0</span>
-            </div>
-            <div class="summary-row">
-                <span>Delivery</span>
-                <span id="cart-delivery">$0</span>
-            </div>
-            <div class="summary-row total">
-                <span>Total</span>
-                <span id="cart-total">$0</span>
-            </div>
-
-            <div class="delivery-info" id="delivery-message">
-                Agrega $1500 más para envío gratis
-            </div>
-
-            <div class="cart-actions">
-                <a href="checkout.html" class="btn-checkout">Finalizar Compra</a>
-                <a href="products.html" class="btn-continue">Seguir Comprando</a>
-                <button class="btn-clear" id="clear-cart">Vaciar Carrito</button>
-            </div>
-        </div>
+  <main>
+    <h1 style="text-align:center; margin-top:1rem;">Nuestros Productos</h1>
+    <div class="search-container">
+      <input id="buscador" type="text" placeholder="Buscar producto..." />
     </div>
-
-    <div class="cart-overlay" id="cart-overlay"></div>
-
-    <!-- Cart Floating Button -->
-    <div class="cart-floating" id="cart-floating">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-floating-count" id="cart-floating-count">0</span>
+    <div class="productos-container" id="productos-container">
+      <p style="grid-column: 1/-1; text-align:center;">Cargando productos...</p>
     </div>
+  </main>
 
-    <!-- Scripts -->
-    <script src="js/app.js"></script>
-<!-- Modificar el script al final de products.html -->
-<script>
-    // View toggle
-    document.addEventListener('DOMContentLoaded', function() {
-        const viewButtons = document.querySelectorAll('.view-btn');
-        if (viewButtons.length > 0) {
-            viewButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
+  <div id="footer"></div>
 
-                    const view = this.dataset.view;
-                    const grid = document.getElementById('products-grid');
-
-                    if (view === 'grid') {
-                        grid.classList.remove('list-view');
-                        grid.classList.add('grid-view');
-                    } else {
-                        grid.classList.remove('grid-view');
-                        grid.classList.add('list-view');
-                    }
-                });
-            });
-        }
-
-        // Price filter display
-        const priceFilter = document.getElementById('price-filter');
-        const priceValue = document.getElementById('price-value');
-
-        if (priceFilter && priceValue) {
-            priceFilter.addEventListener('input', function() {
-                priceValue.textContent = `$0 - $${this.value}`;
-                // Apply filter immediately
-                AppState.filters.priceRange[1] = parseInt(this.value);
-                renderProducts();
-            });
-        }
-
-        // Show loading message while products load
-        const productsGrid = document.getElementById('products-grid');
-        if (productsGrid) {
-            // This will be replaced when products load
-            console.log('🔄 Esperando productos...');
-        }
-    });
-
-    // Override renderProducts to remove loading message
-    const originalRenderProducts = window.renderProducts;
-    window.renderProducts = function() {
-        if (originalRenderProducts) {
-            originalRenderProducts();
-        }
-        // Remove loading message
-        const loadingMsg = document.querySelector('.loading-products');
-        if (loadingMsg) {
-            loadingMsg.style.display = 'none';
-        }
-    };
-</script>
-<!-- Audio Player -->
-<div class="audio-player" id="audio-player">
-    <audio id="bg-music" loop>
-        <source src="media/jingle.mp3" type="audio/mpeg">
-        Tu navegador no soporta el elemento de audio.
-    </audio>
-    <div class="audio-controls">
-        <button class="audio-btn" id="play-btn" title="Reproducir/Pausar">
-            <i class="fas fa-play"></i>
-        </button>
-        <div class="volume-control">
-            <button class="audio-btn" id="mute-btn" title="Silenciar">
-                <i class="fas fa-volume-up"></i>
-            </button>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" title="Volumen">
-        </div>
-    </div>
-</div>
-
-<!-- Scripts -->
-<script src="js/app.js"></script>
-<script src="js/cart-system.js"></script>
-<script src="js/audio-player.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/products.js"></script>
 </body>
 </html>
