@@ -13,7 +13,12 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/neon-effects.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    /* tu CSS original intacto */
+    .products-page {padding-top:120px;min-height:100vh;background:linear-gradient(135deg,#0a0a0a 0%,#0f0f1a 100%);}
+  </style>
 </head>
+
 <body>
   <!-- Header -->
   <header class="main-header glass-effect">
@@ -44,31 +49,74 @@
           <span class="cart-count">0</span>
         </button>
       </div>
-
-      <button class="menu-toggle" id="menu-toggle">
-        <i class="fas fa-bars"></i>
-      </button>
+      <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
     </div>
   </header>
 
+  <!-- Products -->
   <main class="products-page">
     <div class="container">
       <div class="products-header">
         <h1 class="products-title">Nuestro Catálogo</h1>
-        <p class="products-subtitle">Explora todos nuestros productos disponibles y hacé tu pedido al instante.</p>
+        <p class="products-subtitle">Explora todos nuestros productos disponibles. Filtra por categoría, precio o busca lo que necesites.</p>
       </div>
 
+      <!-- Filtros -->
       <div class="filters-container">
         <div class="filter-grid">
           <div class="filter-group">
             <label class="filter-label"><i class="fas fa-search"></i> Buscar producto</label>
             <input type="text" id="search-input" class="filter-input" placeholder="Escribe para buscar...">
           </div>
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-tags"></i> Categoría</label>
+            <select id="category-filter" class="filter-select">
+              <option value="">Todas las categorías</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-sort-amount-down"></i> Ordenar por</label>
+            <select id="sort-filter" class="filter-select">
+              <option value="">Predeterminado</option>
+              <option value="price-asc">Menor precio</option>
+              <option value="price-desc">Mayor precio</option>
+              <option value="name-asc">A - Z</option>
+              <option value="name-desc">Z - A</option>
+              <option value="popular">Más vendidos</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label"><i class="fas fa-filter"></i> Rango de precio</label>
+            <div class="price-range">
+              <span class="price-value" id="price-value">$0 - $10000</span>
+              <input type="range" id="price-filter" min="0" max="10000" value="10000" class="filter-input" style="flex:1;">
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px;">
+          <button onclick="clearFilters()" class="btn-secondary" style="flex:1;"><i class="fas fa-times"></i> Limpiar filtros</button>
         </div>
       </div>
 
-      <div id="productos-container" class="products-grid">
-        <p class="loading-products">Cargando productos...</p>
+      <!-- Contador -->
+      <div class="products-stats">
+        <div class="products-count">Mostrando <span id="shown-count">0</span> de <span id="total-count">0</span> productos</div>
+      </div>
+
+      <!-- Productos -->
+      <div class="products-grid" id="products-grid">
+        <div class="loading-products" style="grid-column:1/-1;text-align:center;padding:4rem 2rem;">
+          <div class="neon-spinner" style="margin:0 auto 1rem;"></div>
+          <p>Cargando productos...</p>
+        </div>
+      </div>
+
+      <!-- No products -->
+      <div class="no-products" id="no-products">
+        <i class="fas fa-search"></i>
+        <h3>No se encontraron productos</h3>
+        <p>Intenta con otros filtros o términos de búsqueda</p>
+        <button onclick="clearFilters()" class="btn-primary"><i class="fas fa-times"></i> Limpiar filtros</button>
       </div>
     </div>
   </main>
@@ -76,7 +124,7 @@
   <!-- Footer -->
   <footer class="main-footer">
     <div class="container">
-      <p>&copy; 2025 Autoservice Liam Yahir - Todos los derechos reservados.</p>
+      <p>&copy; 2025 Autoservice Liam Yahir. Todos los derechos reservados.</p>
     </div>
   </footer>
 
@@ -86,92 +134,98 @@
     <span class="cart-floating-count" id="cart-floating-count">0</span>
   </div>
 
+  <!-- Audio Player -->
+  <div class="audio-player" id="audio-player">
+    <audio id="bg-music" loop>
+      <source src="media/jingle.mp3" type="audio/mpeg">
+    </audio>
+    <div class="audio-controls">
+      <button class="audio-btn" id="play-btn" title="Reproducir/Pausar"><i class="fas fa-play"></i></button>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="js/app.js"></script>
   <script src="js/cart-system.js"></script>
+  <script src="js/audio-player.js"></script>
 
+  <!-- 🔥 Conexión a Neon -->
   <script>
     async function cargarProductos() {
-      const contenedor = document.getElementById('productos-container');
+      const contenedor = document.getElementById('products-grid');
       const buscador = document.getElementById('search-input');
+      const totalCount = document.getElementById('total-count');
+      const shownCount = document.getElementById('shown-count');
+      const noProducts = document.getElementById('no-products');
 
       try {
         const endpoint = 'https://deliveryliamyahir.netlify.app/.netlify/functions/get-products';
         const res = await fetch(endpoint);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const productos = await res.json();
-        renderProductos(productos);
 
+        const productos = await res.json();
+        totalCount.textContent = productos.length;
+        renderProductos(productos);
         buscador.addEventListener('input', (e) => {
           const texto = e.target.value.toLowerCase();
-          const filtrados = productos.filter(p =>
-            p.nombre.toLowerCase().includes(texto) ||
-            (p.marca || '').toLowerCase().includes(texto)
-          );
+          const filtrados = productos.filter(p => p.nombre.toLowerCase().includes(texto));
           renderProductos(filtrados);
         });
-
       } catch (error) {
         console.error('❌ Error cargando productos:', error);
         contenedor.innerHTML = `<p style="color:red;">Error al cargar productos.</p>`;
       }
-    }
 
-    function renderProductos(lista) {
-      const contenedor = document.getElementById('productos-container');
-      contenedor.innerHTML = '';
+      function renderProductos(lista) {
+        contenedor.innerHTML = '';
+        shownCount.textContent = lista.length;
+        noProducts.style.display = lista.length ? 'none' : 'block';
 
-      if (!lista.length) {
-        contenedor.innerHTML = `<p>No se encontraron productos.</p>`;
-        return;
+        lista.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'producto-card';
+          card.innerHTML = `
+            <div class="producto-img-container">
+              <img src="${p.imagen}" alt="${p.nombre}" class="producto-imagen">
+            </div>
+            <h3 class="producto-nombre">${p.nombre}</h3>
+            <p class="producto-precio">$${p.precio?.toFixed(2) || '0.00'}</p>
+            <div class="cantidad">
+              <button class="menos" data-id="${p.id}">-</button>
+              <span id="cantidad-${p.id}">1</span>
+              <button class="mas" data-id="${p.id}">+</button>
+            </div>
+            <button class="btn-agregar" data-id="${p.id}">Agregar al carrito</button>
+          `;
+          contenedor.appendChild(card);
+        });
+
+        document.querySelectorAll('.mas').forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.dataset.id;
+            const el = document.getElementById(`cantidad-${id}`);
+            el.textContent = Number(el.textContent) + 1;
+          };
+        });
+
+        document.querySelectorAll('.menos').forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.dataset.id;
+            const el = document.getElementById(`cantidad-${id}`);
+            el.textContent = Math.max(1, Number(el.textContent) - 1);
+          };
+        });
+
+        document.querySelectorAll('.btn-agregar').forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.dataset.id;
+            const producto = lista.find(p => p.id == id);
+            const cantidad = Number(document.getElementById(`cantidad-${id}`).textContent);
+            addToCart({ ...producto, quantity: cantidad });
+            new Audio('media/jingle.mp3').play();
+          };
+        });
       }
-
-      lista.forEach(p => {
-        const card = document.createElement('div');
-        card.classList.add('producto-card');
-        card.innerHTML = `
-          <img src="${p.imagen}" alt="${p.nombre}" class="producto-imagen">
-          <h3>${p.nombre}</h3>
-          <p class="producto-marca">${p.marca || ''}</p>
-          <p class="producto-precio">$${p.precio?.toFixed(2) || '0.00'}</p>
-          <div class="cantidad">
-            <button class="menos" data-id="${p.id}">-</button>
-            <span id="cantidad-${p.id}">1</span>
-            <button class="mas" data-id="${p.id}">+</button>
-          </div>
-          <button class="agregar-carrito" data-id="${p.id}">Agregar al carrito</button>
-        `;
-        contenedor.appendChild(card);
-      });
-
-      inicializarEventosCarrito(lista);
-    }
-
-    function inicializarEventosCarrito(lista) {
-      document.querySelectorAll('.mas').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          const el = document.getElementById(`cantidad-${id}`);
-          el.textContent = Number(el.textContent) + 1;
-        });
-      });
-
-      document.querySelectorAll('.menos').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          const el = document.getElementById(`cantidad-${id}`);
-          el.textContent = Math.max(1, Number(el.textContent) - 1);
-        });
-      });
-
-      document.querySelectorAll('.agregar-carrito').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = btn.dataset.id;
-          const producto = lista.find(p => p.id == id);
-          const cantidad = Number(document.getElementById(`cantidad-${id}`).textContent);
-          addToCart({ ...producto, quantity: cantidad });
-        });
-      });
     }
 
     document.addEventListener('DOMContentLoaded', cargarProductos);
