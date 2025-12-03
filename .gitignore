@@ -1,0 +1,17 @@
+# Archivos pesados y basura
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.exe
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.mp4
+*.mov
+*.avi
+.DS_Store
+Thumbs.db
+node_modules/
