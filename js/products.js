@@ -3,30 +3,35 @@ async function cargarProductos() {
   const buscador = document.getElementById('buscador');
 
   try {
-    // Detecta automáticamente si está en Netlify o local
-     const baseURL = 'https://deliveryliamyahir.netlify.app/.netlify/functions/get-products';
+    // 🚀 URL absoluta (aseguramos que NO devuelva el index.html)
+    const endpoint = 'https://deliveryliamyahir.netlify.app/.netlify/functions/get-products';
 
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+    });
 
-    const res = await fetch(baseURL);
-    if (!res.ok) throw new Error('Respuesta no válida del servidor');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const productos = await res.json();
-    let lista = productos;
-    renderProductos(lista);
+    console.log("✅ Productos cargados:", productos.length);
+    renderProductos(productos);
 
-    buscador.addEventListener('input', e => {
+    buscador.addEventListener('input', (e) => {
       const texto = e.target.value.toLowerCase();
-      const filtrados = lista.filter(p =>
+      const filtrados = productos.filter((p) =>
         p.nombre.toLowerCase().includes(texto) ||
         (p.marca || '').toLowerCase().includes(texto)
       );
       renderProductos(filtrados);
     });
+
   } catch (error) {
     console.error('❌ Error cargando productos:', error);
-    contenedor.innerHTML = `<p style="color:red;">Error al cargar productos.</p>`;
+    contenedor.innerHTML = `<p style="color:red;">Error al cargar productos. ${error.message}</p>`;
   }
 }
+
 
 
 function renderProductos(productos) {
