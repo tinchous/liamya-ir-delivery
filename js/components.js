@@ -43,3 +43,14 @@ class ComponentLoader {
 document.addEventListener('DOMContentLoaded', () => {
     ComponentLoader.loadComponents();
 });
+// FIX CARRITO DEFINITIVO
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('cart-sidebar');
+  const overlay = document.getElementById('cart-overlay');
+  const floating = document.getElementById('cart-floating');
+  const close = document.getElementById('cart-close');
+
+  if (floating) floating.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
+  if (overlay) overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+  if (close) close.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+});

@@ -3,99 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Autoservice Liam Yahir - Inicio</title>
-
-  <!-- Fonts + Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: #0a0a0a;
-      color: white;
-    }
-    .cart-floating {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #00ffff;
-      color: black;
-      padding: 12px 16px;
-      border-radius: 30px;
-      cursor: pointer;
-      z-index: 999;
-    }
-    .cart-sidebar {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 300px;
-      height: 100%;
-      background: #111;
-      transition: right 0.3s;
-      padding: 20px;
-      z-index: 1000;
-      overflow-y: auto;
-    }
-    .cart-sidebar.active {
-      right: 0;
-    }
-    #audio-player {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 10px;
-      border-radius: 10px;
-      z-index: 998;
-    }
-    .audio-controls button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-  </style>
+  <title>Autoservice Liam Yahir - Delivery 08:00-23:30</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/neon-effects.css"/>
   <link rel="stylesheet" href="css/responsive.css"/>
   <meta name="theme-color" content="#00ffff" />
 </head>
 <body>
+  <div id="header-container"></div>
 
-  <h1 style="text-align: center; margin-top: 50px;">Bienvenido a Autoservice Liam Yahir</h1>
+  <main class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title neon-glow">AUTOSERVICE <span class="liam">LIAM</span> <span class="ya">YAHIR</span></h1>
+      <p class="hero-subtitle">Rotisería fresca • Frutas & Verduras • Delivery 08:00 - 23:30</p>
+      <a href="products.html" class="btn-primary btn-large">🛒 Ver Catálogo</a>
+    </div>
+  </main>
 
-  <!-- Carrito flotante -->
+  <section id="categorias-destacadas" style="padding:3rem 1rem; text-align:center;">
+    <h2 class="neon-title">🔥 CATEGORÍAS DESTACADAS 🔥</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; max-width:1400px; margin:2rem auto;">
+      <a href="products.html?categoria=ROTISERIA" class="categoria-card" style="background:#ff450022; border:3px solid #ff4500;">
+        <div style="font-size:5rem;">🍗</div>
+        <h3>ROTISERÍA</h3>
+        <p>Milanesas, croquetas, papas deluxe</p>
+      </a>
+      <a href="products.html?categoria=FRUTAS/VERDURAS" class="categoria-card" style="background:#00ff0022; border:3px solid #00ff00;">
+        <div style="font-size:5rem;">🥬🍓</div>
+        <h3>FRUTAS & VERDURAS</h3>
+        <p>Frescas todos los días</p>
+      </a>
+      <a href="products.html?categoria=PANADERIA" class="categoria-card" style="background:#ffd70022; border:3px solid #ffd700;">
+        <div style="font-size:5rem;">🥖</div>
+        <h3>PANADERÍA</h3>
+        <p>Bizcochos, facturas, pan caliente</p>
+      </a>
+    </div>
+  </section>
+
+  <div id="footer-container"></div>
+
   <div class="cart-floating" id="cart-floating">
-    <i class="fas fa-shopping-cart"></i> <span id="cart-floating-count">0</span>
+    <i class="fas fa-shopping-cart"></i>
+    <span id="cart-floating-count">0</span>
   </div>
 
-  <!-- Sidebar del carrito -->
   <div class="cart-sidebar" id="cart-sidebar">
-    <h3>🛒 Tu Carrito</h3>
-    <div id="cart-items"></div>
-    <p>Total: <span id="cart-total">$0</span></p>
-    <button id="clear-cart">Vaciar carrito</button>
-  </div>
-
-  <!-- Reproductor de audio -->
-  <div class="audio-player" id="audio-player">
-    <audio id="bg-music" loop>
-      <source src="media/jingle.mp3" type="audio/mpeg" />
-      Tu navegador no soporta audio.
-    </audio>
-    <div class="audio-controls">
-      <button id="play-btn"><i class="fas fa-play"></i></button>
-      <button id="mute-btn"><i class="fas fa-volume-up"></i></button>
-      <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.3">
+    <div class="cart-header">
+      <h3>🛒 Tu Carrito</h3>
+      <button id="cart-close">✖</button>
+    </div>
+    <div id="cart-items">Tu carrito está vacío</div>
+    <div class="cart-footer">
+      <p>Total: <strong id="cart-total">$0</strong></p>
+      <a href="checkout.html" class="btn-primary">Finalizar Pedido</a>
     </div>
   </div>
 
-  <script src="js/audio-player.js"></script>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <script>
+    document.getElementById('header-container').innerHTML = document.querySelector('header').outerHTML;
+    document.getElementById('footer-container').innerHTML = document.querySelector('footer').outerHTML;
+  </script>
   <script src="js/cart-system.js"></script>
   <script src="js/components.js"></script>
-    <script src="js/home-categories.js"></script>
+  <script src="js/audio-player.js"></script>
 </body>
 </html>
